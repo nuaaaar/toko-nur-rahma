@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,12 @@ Route::middleware('guest')->group(function()
 });
 
 
-Route::prefix('dashboard')->name('dashboard.')->group(function()
+Route::middleware('auth')->group(function()
 {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('index');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function()
+    {
+    });
 });
+
