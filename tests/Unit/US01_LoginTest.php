@@ -18,7 +18,7 @@ class US01_LoginTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create([
-            'email' => 'user@toko-nur-rahma.test',
+            'email' => 'user@nurrahma.test'
         ]); // Buat user dummy
     }
 
