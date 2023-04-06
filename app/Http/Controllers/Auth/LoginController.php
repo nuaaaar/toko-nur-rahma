@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\LoginRequest;
 use App\Services\User\UserServiceImplement;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     protected $userService;
 
@@ -30,5 +31,12 @@ class AuthController extends Controller
         } catch (ValidationException $e) {
             return redirect()->route('login')->withErrors($e->errors()); // Jika gagal, maka redirect ke halaman login dengan pesan error
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $this->userService->logout($request); // Lakukan logout
+
+        return redirect()->route('login'); // Redirect ke halaman login
     }
 }

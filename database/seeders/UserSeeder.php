@@ -17,5 +17,15 @@ class UserSeeder extends Seeder
             'name' => 'Pimpinan CV. Nur Rahma',
             'email' => 'pimpinan@nurrahma.co.id'
         ]);
+
+        User::factory()->create([
+            'name' => 'Yanuar Fabien',
+            'email' => 'yanuar.fabien.yf@gmail.com'
+        ]);
+
+        User::factory()->create([
+            'name' => 'Yanuar Fabien',
+            'email' => '10191089@student.itk.ac.id'
+        ]);
     }
 }
