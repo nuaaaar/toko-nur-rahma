@@ -11,7 +11,7 @@
         <ul class="space-y-2">
             <li class="menu-item">
                 <a href="javascript:;" class="group" sidebar-toggle-collapse="">
-                    <div class="menu-icon">
+                    <div class="menu-icon border">
                         <i data-feather="users"></i>
                     </div>
                     <span class="menu-text" sidebar-toggle-item="">Jenis Pengguna</span>
@@ -19,7 +19,7 @@
             </li>
             <li class="menu-item">
                 <a href="javascript:;" class="group" sidebar-toggle-collapse="">
-                    <div class="menu-icon">
+                    <div class="menu-icon border">
                         <i data-feather="user"></i>
                     </div>
                     <span class="menu-text" sidebar-toggle-item="">Pengguna</span>

@@ -10,6 +10,9 @@ module.exports = {
 		"./resources/**/*.vue",
         "./node_modules/flowbite/**/*.js",
 	],
+    safeLists: [
+        'btn', 'btn-primary'
+    ],
     theme: {
         extend: {
             colors: {

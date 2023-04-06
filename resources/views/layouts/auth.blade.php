@@ -17,8 +17,8 @@
     @vite('resources/css/app.css')
     @stack('style')
 </head>
-<body class="bg-white">
-    <div class="min-h-screen flex items-center justify-center">
+<body class="bg-gray-100">
+    <div class="min-h-screen w-full flex items-center justify-center bg-primary-600">
         <!-- Left Column -->
         <div class="bg-center bg-no-repeat bg-auth bg-gray-700 bg-blend-multiply hidden w-full md:flex md:items-center md:min-h-screen">
             <div class="px-4 mx-auto max-w-screen-xl text-center">
@@ -27,10 +27,24 @@
             </div>
         </div>
         <!-- Right Column -->
-        <div class="bg-transparent min-h-screen flex items-center justify-center px-6 w-full md:bg-white">
+        <div class="bg-transparent min-h-screen flex items-center justify-center px-6 w-full dark:md:bg-gray-800 md:bg-white">
             @yield('content')
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite('resources/js/app.js')
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
+    @stack('script')
+    @if (session('success'))
+        <script>
+            showSuccessDialog("{{ session('success') }}");
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            showSuccessDialog("{{ session('error') }}");
+        </script>
+    @endif
 </body>
 </html>
