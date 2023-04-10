@@ -9,17 +9,19 @@
                 class="self-center text-xl font-bold tracking-tight whitespace-nowrap dark:text-white">SISTEM TOKO</span>
         </div>
         <ul class="space-y-2">
+            @can('read role')
+                <li class="menu-item">
+                    <a href="{{ route('dashboard.role-and-permission.index') }}" class="group" sidebar-toggle-collapse="">
+                        <div class="menu-icon">
+                            <i data-feather="users"></i>
+                        </div>
+                        <span class="menu-text" sidebar-toggle-item="">Jenis Pengguna</span>
+                    </a>
+                </li>
+            @endcan
             <li class="menu-item">
                 <a href="javascript:;" class="group" sidebar-toggle-collapse="">
-                    <div class="menu-icon border">
-                        <i data-feather="users"></i>
-                    </div>
-                    <span class="menu-text" sidebar-toggle-item="">Jenis Pengguna</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="javascript:;" class="group" sidebar-toggle-collapse="">
-                    <div class="menu-icon border">
+                    <div class="menu-icon">
                         <i data-feather="user"></i>
                     </div>
                     <span class="menu-text" sidebar-toggle-item="">Pengguna</span>

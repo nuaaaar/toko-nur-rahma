@@ -1,5 +1,5 @@
 <header>
-    <nav class="bg-white border-gray-200 py-2.5 rounded-lg shadow-lg shadow-gray-300 dark:bg-gray-800 px-3">
+    <nav class="bg-white border-gray-200 py-3 rounded-lg shadow-lg shadow-gray-300 dark:bg-gray-800 px-5">
         <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
                 <button data-drawer-target="sidebar" data-drawer-toggle="sidebar" aria-expanded="true" aria-controls="sidebar"
@@ -18,7 +18,7 @@
                     </div>
                     <div class="text-left hidden md:block">
                         <span
-                            class="block text-sm font-semibold text-gray-900 leading-none dark:text-white">{{ Auth::user()->name }} <i data-feather="chevron-down"></i></span>
+                            class="block text-sm font-semibold text-gray-900 leading-none dark:text-white">{{ Auth::user()->name }}</span>
                         <span
                             class="block text-sm font-light text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</span>
                     </div>
