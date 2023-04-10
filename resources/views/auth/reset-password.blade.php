@@ -6,17 +6,17 @@
 <div class="w-full max-w-md p-6 space-y-4 md:space-y-6 sm:p-8 bg-white rounded-lg md:bg-transparent">
     <div class="text-center">
         <img src="{{ asset('images/logo-square.png') }}" alt="Logo" class="w-24 h-24 mx-auto">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        <h1 class="auth-title">
             Atur Ulang Kata Sandi
         </h1>
-        <p class=" text-gray-900 dark:text-white">Silahkan masukkan password baru.</p>
+        <p class="auth-subtitle">Silahkan masukkan password baru.</p>
     </div>
-    <form class="space-y-4 md:space-y-6" action="{{ route('password.update') }}" method="POST">
+    <form class="form" action="{{ route('password.update') }}" method="POST">
         @csrf
         <input type="hidden" name="email" value="{{ request()->email }}">
         <input type="hidden" name="token" value="{{ request()->token }}">
         <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat Email</label>
+            <label for="email" class="label-block">Alamat Email</label>
             <input type="email" id="email" class="@error('email') is-invalid @enderror form-control" value="{{ request()->email }}" disabled>
             @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -25,7 +25,7 @@
             @enderror
         </div>
         <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kata Sandi Baru</label>
+            <label for="password" class="label-block">Kata Sandi Baru</label>
             <div class="input-group">
                 <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror form-control" required>
                 <span class="input-group-append toggle-password" data-toggle="#password">
