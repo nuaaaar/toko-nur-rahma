@@ -87,7 +87,11 @@
 }
 
 .menu-item>a>.menu-icon{
-    @apply bg-white shadow-lg shadow-gray-300 text-secondary-600 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center;
+    @apply w-8 h-8 mr-1 rounded-lg text-center grid place-items-center;
+}
+
+.menu-item>a>.menu-icon>.feather{
+    @apply w-4 h-4;
 }
 
 .menu-text{
@@ -103,11 +107,11 @@
 }
 
 .menu-item.active>a{
-    @apply bg-primary-500;
+    @apply bg-gradient-to-bl from-primary-500  to-primary-600;
 }
 
 .menu-item.active>a>.menu-icon{
-    @apply shadow-primary-300;
+    @apply shadow-primary-300 text-white;
 }
 
 .menu-item.active>a>.menu-text{

@@ -6,6 +6,10 @@ feather.replace();
 
 $(document).ready(function()
 {
+    let targetUrl = location.protocol + '//' + location.host + location.pathname
+    console.log({targetUrl});
+    markActiveMenu(targetUrl);
+
     $(document).on('submit', 'form', function()
     {
         $(this).find('button[type="submit"]').prop('disabled', true);
@@ -19,3 +23,9 @@ $(document).ready(function()
         $(this).closest('.input-group').siblings('.invalid-feedback').remove();
     });
 });
+
+function markActiveMenu(targetUrl) {
+    if ($(`a[href="${targetUrl}"]`)[0]) {
+        $(`a[href="${targetUrl}"]`).closest('.menu-item').addClass('active')
+    }
+}
