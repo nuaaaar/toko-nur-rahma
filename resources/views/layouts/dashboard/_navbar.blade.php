@@ -1,5 +1,5 @@
 <header>
-    <nav class="bg-white border-gray-200 py-3 rounded-lg shadow-lg shadow-gray-300 dark:bg-gray-800 px-5">
+    <nav class="bg-white border-gray-200 py-3 rounded-lg shadow-lg dark:bg-gray-800 px-5">
         <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
                 <button data-drawer-target="sidebar" data-drawer-toggle="sidebar" aria-expanded="true" aria-controls="sidebar"

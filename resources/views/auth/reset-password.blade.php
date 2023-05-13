@@ -28,9 +28,9 @@
             <label for="password" class="label-block">Kata Sandi Baru</label>
             <div class="input-group">
                 <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror form-control" required>
-                <span class="input-group-append toggle-password" data-toggle="#password">
-                    <i class="hidden" data-feather="eye"></i>
-                    <i class="" data-feather="eye-off"></i>
+                <span class="input-group-append cursor-pointer toggle-password" data-toggle="#password">
+                    <i class="fa-light fa-eye hidden"></i>
+                    <i class="fa-light fa-eye-slash"></i>
                 </span>
             </div>
             @error('password')
@@ -43,9 +43,9 @@
             <label for="password-confirm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Konfirmasi Kata Sandi</label>
             <div class="input-group">
                 <input type="password" name="password_confirmation" id="password-confirm" class="@error('password_confirmation') is-invalid @enderror form-control" required>
-                <span class="input-group-append toggle-password" data-toggle="#password-confirm">
-                    <i class="hidden" data-feather="eye"></i>
-                    <i class="" data-feather="eye-off"></i>
+                <span class="input-group-append cursor-pointer toggle-password" data-toggle="#password-confirm">
+                    <i class="fa-light fa-eye hidden"></i>
+                    <i class="fa-light fa-eye-slash"></i>
                 </span>
             </div>
             @error('password_confirmation')
@@ -65,7 +65,7 @@
         {
             $('.toggle-password').click(function()
             {
-                $(this).find('.feather').toggleClass('hidden');
+                $(this).find('i').toggleClass('hidden');
                 var input = $($(this).data('toggle'));
                 if (input.attr('type') == 'password')
                 {

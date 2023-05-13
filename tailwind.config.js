@@ -23,6 +23,7 @@ module.exports = {
                 center: true,
             },
             fontFamily: {
+                body: ['Inter', 'sans-serif', ...defaultTheme.fontFamily.sans],
                 sans: ['Inter', 'sans-serif', ...defaultTheme.fontFamily.sans],
             }
         },
