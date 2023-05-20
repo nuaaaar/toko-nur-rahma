@@ -19,14 +19,36 @@
                     </a>
                 </li>
             @endcan
-            <li class="menu-item">
-                <a href="{{ route('dashboard.user.index') }}">
-                    <div class="menu-icon">
-                        <i data-feather="user"></i>
-                    </div>
-                    <span class="menu-text">Pengguna</span>
-                </a>
-            </li>
+            @can('users.read')
+                <li class="menu-item">
+                    <a href="{{ route('dashboard.user.index') }}">
+                        <div class="menu-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                        <span class="menu-text">Pengguna</span>
+                    </a>
+                </li>
+            @endcan
+            @can('suppliers.read')
+                <li class="menu-item">
+                    <a href="{{ route('dashboard.supplier.index') }}">
+                        <div class="menu-icon">
+                            <i data-feather="shopping-bag"></i>
+                        </div>
+                        <span class="menu-text">Agen</span>
+                    </a>
+                </li>
+            @endcan            
+            @can('banks.read')
+                <li class="menu-item">
+                    <a href="{{ route('dashboard.bank.index') }}">
+                        <div class="menu-icon">
+                            <i data-feather="credit-card"></i>
+                        </div>
+                        <span class="menu-text">Bank</span>
+                    </a>
+                </li>
+            @endcan            
         </ul>
     </div>
 </aside>

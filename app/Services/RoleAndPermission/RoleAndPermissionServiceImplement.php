@@ -75,6 +75,18 @@ class RoleAndPermissionServiceImplement extends Service implements RoleAndPermis
                 'update',
                 'delete',
             ],
+            'suppliers' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'banks' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
         ];
     }
 }

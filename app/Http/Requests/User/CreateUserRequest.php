@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class CreateUserRequest extends FormRequest
         return [
             'roles' => 'required|array|exists:roles,name',
             'name' => 'required',
-            'email' => 'required|unique:users',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|confirmed',
         ];
     }

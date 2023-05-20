@@ -24,7 +24,7 @@
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <i class="fa-light fa-search"></i>
+                                <i class="fal fa-search"></i>
                             </div>
                             <input type="text" name="search" id="simple-search" class="form-control" placeholder="Cari" value="{{ request()->search }}">
                         </div>
@@ -57,7 +57,7 @@
                             <button class="btn btn-sm btn-primary w-full mt-2">Terapkan</button>
                         </div>
                         <a href="{{ route('dashboard.user.create') }}" class="btn btn-primary">
-                            <i class="fa-solid fa-plus"></i>
+                            <i class="fas fa-plus"></i>
                             <span> Pengguna </span>
                         </a>
                     </div>
@@ -68,19 +68,19 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col">
-                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'name', 'orderType' => request()->orderBy == 'name' && request()->orderType == 'asc' ? 'desc' : 'asc' ]) }}" class="inline-flex items-center">
+                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'name', 'orderType' => request()->orderBy == 'name' && request()->orderType == 'asc' ? 'desc' : 'asc' ]) }}" class="inline-flex items-center gap-x-1">
                                     Nama
                                     <i class="fa {{ request()->orderBy != 'name' ? 'fa-sort' : (request()->orderBy == 'name' && request()->orderType == 'asc' ? 'fa-sort-up' : 'fa-sort-down')  }} w-3 h-3 ml-1"></i>
                                 </a>
                             </th>
                             <th scope="col">
-                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'role_name', 'orderType' => request()->orderBy == 'role_name' && request()->orderType == 'asc' ? 'desc' : 'asc']) }}" class="inline-flex items-center">
+                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'role_name', 'orderType' => request()->orderBy == 'role_name' && request()->orderType == 'asc' ? 'desc' : 'asc']) }}" class="inline-flex items-center gap-x-1">
                                     Jenis Pengguna
                                     <i class="fa {{ request()->orderBy != 'role_name' ? 'fa-sort' : (request()->orderBy == 'role_name' && request()->orderType == 'asc' ? 'fa-sort-up' : 'fa-sort-down')  }} w-3 h-3 ml-1"></i>
                                 </a>
                             </th>
                             <th scope="col">
-                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'email', 'orderType' => request()->orderBy == 'email' && request()->orderType == 'asc' ? 'desc' : 'asc']) }}" class="inline-flex items-center">
+                                <a href="{{ request()->fullUrlWithQuery(['orderBy' => 'email', 'orderType' => request()->orderBy == 'email' && request()->orderType == 'asc' ? 'desc' : 'asc']) }}" class="inline-flex items-center gap-x-1">
                                     Email
                                     <i class="fa {{ request()->orderBy != 'email' ? 'fa-sort' : (request()->orderBy == 'email' && request()->orderType == 'asc' ? 'fa-sort-up' : 'fa-sort-down')  }} w-3 h-3 ml-1"></i>
                                 </a>
@@ -101,11 +101,11 @@
                                 <td style="width: 1%">
                                     <div class="flex items-center justify-end space-x-3">
                                         <a href="{{ route('dashboard.user.edit', $user->id) }}" class="btn btn-text">
-                                            <i class="fa-solid fa-pencil"></i>
+                                            <i class="fas fa-pencil"></i>
                                             <span> Edit </span>
                                         </a>
                                         <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.user.destroy', $user->id) }}">
-                                            <i class="fa-solid fa-trash"></i>
+                                            <i class="fas fa-trash"></i>
                                             <span> Delete </span>
                                         </button>
                                     </div>

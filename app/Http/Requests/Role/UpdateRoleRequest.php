@@ -22,7 +22,14 @@ class UpdateRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'unique:roles,name,'.$this->route('role_and_permission')
+            'name' => 'unique:roles,name,' . request()->role_and_permission
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'jenis pengguna'
         ];
     }
 }

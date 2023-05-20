@@ -44,7 +44,11 @@ Route::middleware('auth')->group(function()
 
     Route::prefix('dashboard')->name('dashboard.')->group(function()
     {
+        Route::resource('bank', Dashboard\BankController::class);
+
         Route::resource('role-and-permission', Dashboard\RoleAndPermissionController::class);
+
+        Route::resource('supplier', Dashboard\SupplierController::class);
 
         Route::resource('user', Dashboard\UserController::class);
     });
