@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\User\UserService;
 use App\Services\User\UserServiceImplement;
 use Exception;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class ForgotPasswordController extends Controller
 {
     protected $userService;
 
-    public function __construct(UserServiceImplement $userService)
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
@@ -27,7 +28,7 @@ class ForgotPasswordController extends Controller
         try {
             $status = $this->userService->sentResetLinkEmail($request); // Kirim email reset password
 
-            return redirect()->route('login')->with('success', __($status));
+            return redirect()->route('login')->with('success', __($status)); // Redirect ke halaman login dengan pesan sukses
         } catch (ValidationException | Exception $e) {
             if (gettype($e) == Exception::class) {
                 return redirect()->back()->with('error', $e->getMessage());

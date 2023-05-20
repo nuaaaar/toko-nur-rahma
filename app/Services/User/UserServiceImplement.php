@@ -4,6 +4,8 @@ namespace App\Services\User;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use LaravelEasyRepository\Service;
 use App\Repositories\User\UserRepository;
@@ -86,5 +88,31 @@ class UserServiceImplement extends Service implements UserService{
         return $status === Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withErrors(['email' => [__($status)]]);
+    }
+
+    public function getUsersWithRoleName(string $orderBy, string $orderType, ?array $filters, ?string $search, int $limit)
+    {
+        return $this->mainRepository->joinRoleName()->exceptSuperadmin()->filter($filters)->search($search)->orderData($orderBy, $orderType)->paginate($limit);
+    }
+
+    public function getUserWithRoleNameById(int $id)
+    {
+        return $this->mainRepository->joinRoleName()->findOrFail($id);
+    }
+
+    public function createUser(CreateUserRequest $request)
+    {
+        return $this->mainRepository->create($request->except('roles'));
+    }
+
+    public function updateUser(UpdateUserRequest $request, int $id)
+    {
+        $user = $this->mainRepository->findOrFail($id);
+
+        $request['password'] = $request->password ? bcrypt($request->password) : $user->password;
+
+        $user->update($request->except('roles'));
+
+        return $user;
     }
 }

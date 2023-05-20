@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 
 /*
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function()
 
     Route::prefix('dashboard')->name('dashboard.')->group(function()
     {
+        Route::resource('role-and-permission', Dashboard\RoleAndPermissionController::class);
+
+        Route::resource('user', Dashboard\UserController::class);
     });
 });
 

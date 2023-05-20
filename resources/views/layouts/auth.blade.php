@@ -8,7 +8,8 @@
     <title>@yield('title') - Toko Nur Rahma</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css">
     <style>
         .bg-auth{
             background-image: url('/images/auth.jpg');
@@ -18,7 +19,7 @@
     @stack('style')
 </head>
 <body class="bg-gray-100">
-    <div class="min-h-screen w-full flex items-center justify-center bg-primary-600">
+    <div class="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-auth bg-center bg-gray-700 bg-blend-multiply">
         <!-- Left Column -->
         <div class="bg-center bg-no-repeat bg-auth bg-gray-700 bg-blend-multiply hidden w-full md:flex md:items-center md:min-h-screen">
             <div class="px-4 mx-auto max-w-screen-xl text-center">

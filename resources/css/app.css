@@ -11,11 +11,27 @@
 }
 
 .btn {
-    @apply font-medium rounded-lg text-sm text-white px-5 py-2.5 text-center;
+    @apply font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center transition-all duration-300 space-x-2;
+}
+
+.btn-sm{
+    @apply px-3 py-2;
+}
+
+.btn-text{
+    @apply px-0;
 }
 
 .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800;
+    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800;
+}
+
+.btn-outline-primary {
+    @apply border border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary-300 dark:border-primary-600 dark:text-primary-600 dark:hover:bg-primary-600 dark:hover:text-white dark:focus:ring-primary-800;
+}
+
+.btn-secondary {
+    @apply bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-300 dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800;
 }
 
 .btn:disabled {
@@ -31,43 +47,27 @@
 }
 
 .input-group {
-    @apply flex rounded-lg;
+    @apply relative w-full;
 }
 
-.input-group > .form-control:focus {
-    @apply !ring-0 !border-primary-600;
+.input-group i{
+    @apply text-gray-400;
 }
 
-.input-group > .input-group-prepend {
-    @apply order-first inline-flex items-center px-3 text-sm text-gray-400 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600;
+.input-group-prepend {
+    @apply absolute inset-y-0 left-0 flex items-center pl-3;
 }
 
-.input-group > .input-group-prepend:has(~ .form-control:focus) {
-    @apply !ring-0 !border-primary-600;
+.input-group-prepend ~ .form-control {
+    @apply pl-10;
 }
 
-.input-group > .input-group-append {
-    @apply order-last inline-flex items-center px-3 text-sm text-gray-400 bg-gray-50 border border-l-0 border-gray-300 rounded-r-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600;
+.input-group-append {
+    @apply absolute inset-y-0 right-0 flex items-center pr-3;
 }
 
-.input-group > .form-control:focus ~ .input-group-append {
-    @apply !border !border-l-0 !border-primary-600 ;
-}
-
-.input-group:has(> .input-group-prepend) > .form-control {
-    @apply !rounded-none !rounded-r-lg !border-l-0;
-}
-
-.input-group:has(> .input-group-append) > .form-control {
-    @apply !rounded-none !rounded-l-lg !border-r-0;
-}
-
-.input-group:has(> .is-invalid) > .input-group-prepend, .input-group:has(> .is-invalid) > .input-group-append {
-    @apply !border-red-500;
-}
-
-.input-group:has(> .form-control:focus) {
-    @apply !ring-1 !ring-primary-600;
+.input-group-append ~ .form-control {
+    @apply pr-10;
 }
 
 .custom-checkbox {
@@ -76,10 +76,6 @@
 
 .feather{
     @apply w-3 h-3;
-}
-
-.sidebar{
-    @apply fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 md:shadow-lg md:shadow-gray-300;
 }
 
 .menu-item>a{
@@ -107,7 +103,11 @@
 }
 
 .menu-item.active>a{
-    @apply bg-gradient-to-bl from-primary-500  to-primary-600;
+    @apply bg-primary-600;
+}
+
+.menu-item.active:hover>a{
+    @apply bg-primary-700;
 }
 
 .menu-item.active>a>.menu-icon{
@@ -116,10 +116,6 @@
 
 .menu-item.active>a>.menu-text{
     @apply text-white;
-}
-
-.navbar{
-    @apply border-gray-200 fixed top-0 right-0 px-3;
 }
 
 .is-invalid{
@@ -152,4 +148,69 @@
 
 .label-block {
     @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+}
+
+.breadcrumb {
+    @apply inline-flex items-center space-x-1 md:space-x-3;
+}
+
+.breadcrumb > .breadcrumb-item {
+    @apply text-sm font-medium text-gray-500 dark:text-gray-400;
+}
+
+.breadcrumb > .breadcrumb-item > a {
+    @apply text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white;
+}
+
+.card {
+    @apply bg-white rounded-lg shadow-lg dark:bg-gray-800;
+}
+
+.card-header {
+    @apply p-4 border-b border-gray-200 dark:border-gray-700;
+}
+
+.card-header .card-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+}
+
+.card-body {
+    @apply p-4;
+}
+
+.navbar-floating header{
+    @apply p-5;
+}
+
+.navbar-floating main{
+    @apply px-5 pb-5;
+}
+
+.sidebar-collapsed .sidebar{
+    @apply !w-16;
+}
+
+
+.sidebar-collapsed .main-content{
+    @apply !ml-16;
+}
+
+.table{
+    @apply w-full text-sm text-left text-gray-500 dark:text-gray-400;
+}
+
+.table th, .table td{
+    @apply px-4;
+}
+
+.table thead th {
+    @apply py-4 border-b-2;
+}
+
+.table tbody th, .table tbody td {
+    @apply py-2;
+}
+
+.table tr {
+    @apply border-b dark:border-gray-700;
 }
