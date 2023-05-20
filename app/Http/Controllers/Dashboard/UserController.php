@@ -23,7 +23,9 @@ class UserController extends Controller
         $this->roleAndPermissionService = $roleAndPermissionService;
 
         $this->middleware(['permission:users.read'], ['only' => ['index']]);
-    }
+        $this->middleware(['permission:users.create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:users.update'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:users.delete'], ['only' => ['destroy']]);    }
 
     public function index(Request $request)
     {
@@ -72,11 +74,13 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
+        DB::beginTransaction();
         try{
             $user = $this->userService->updateUser($request, $id); // Buat data pengguna
 
             $user->syncRoles($request->roles); // Sinkronisasi hak akses
 
+            DB::commit();
 
             return redirect()->route('dashboard.user.index')->with('success', 'Berhasil mengubah data pengguna'); // Redirect ke halaman pengguna
         } catch (Throwable $e) {

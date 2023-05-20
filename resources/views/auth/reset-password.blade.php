@@ -29,8 +29,8 @@
             <div class="input-group">
                 <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror form-control" required>
                 <span class="input-group-append cursor-pointer toggle-password" data-toggle="#password">
-                    <i class="fa-light fa-eye hidden"></i>
-                    <i class="fa-light fa-eye-slash"></i>
+                    <i class="fal fa-eye hidden"></i>
+                    <i class="fal fa-eye-slash"></i>
                 </span>
             </div>
             @error('password')
@@ -44,8 +44,8 @@
             <div class="input-group">
                 <input type="password" name="password_confirmation" id="password-confirm" class="@error('password_confirmation') is-invalid @enderror form-control" required>
                 <span class="input-group-append cursor-pointer toggle-password" data-toggle="#password-confirm">
-                    <i class="fa-light fa-eye hidden"></i>
-                    <i class="fa-light fa-eye-slash"></i>
+                    <i class="fal fa-eye hidden"></i>
+                    <i class="fal fa-eye-slash"></i>
                 </span>
             </div>
             @error('password_confirmation')

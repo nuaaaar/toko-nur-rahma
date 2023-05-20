@@ -209,6 +209,7 @@ return [
         'test_name'                => 'nama tes',
         'text'                     => 'teks',
         'time'                     => 'waktu',
+        'tin'                      => 'NPWP',
         'title'                    => 'judul',
         'updated_at'               => 'diperbarui pada',
         'username'                 => 'nama pengguna',

@@ -20,6 +20,9 @@ class RoleAndPermissionController extends Controller
         $this->roleAndPermissionService = $roleAndPermissionService;
 
         $this->middleware(['permission:roles.read'], ['only' => ['index']]);
+        $this->middleware(['permission:roles.create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:roles.update'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:roles.delete'], ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -49,7 +52,7 @@ class RoleAndPermissionController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menambahkan data jenis pengguna'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman jenis pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -75,7 +78,7 @@ class RoleAndPermissionController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil mengubah data jenis pengguna'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil mengubah data'); // Redirect ke halaman jenis pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -92,7 +95,7 @@ class RoleAndPermissionController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menghapus data jenis pengguna'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menghapus data'); // Redirect ke halaman jenis pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
