@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\LoginRequest;
-use App\Services\User\UserServiceImplement;
 use App\Http\Controllers\Controller;
+use App\Services\User\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -12,31 +12,31 @@ class LoginController extends Controller
 {
     protected $userService;
 
-    public function __construct(UserServiceImplement $userService)
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
 
     public function index()
     {
-        return view('auth.login'); // Tampilkan halaman login
+        return view('auth.login');
     }
 
     public function login(LoginRequest $request)
     {
         try{
-            $this->userService->authenticate($request); // Lakukan autentikasi
+            $this->userService->authenticate($request);
 
-            return redirect()->route('dashboard.index'); // Redirect ke halaman dashboard
+            return redirect()->route('dashboard.index');
         } catch (ValidationException $e) {
-            return redirect()->route('login')->withErrors($e->errors()); // Jika gagal, maka redirect ke halaman login dengan pesan error
+            return redirect()->route('login')->withErrors($e->errors());
         }
     }
 
     public function logout(Request $request)
     {
-        $this->userService->logout($request); // Lakukan logout
+        $this->userService->logout($request);
 
-        return redirect()->route('login'); // Redirect ke halaman login
+        return redirect()->route('login')->with('success', 'Berhasil logout');
     }
 }

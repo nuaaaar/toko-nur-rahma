@@ -18,7 +18,7 @@
         <div class="card-body">
             <form class="">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full md:w-3/4">
                         <input type="hidden" name="orderBy" value="{{ request()->orderBy }}">
                         <input type="hidden" name="orderType" value="{{ request()->orderType }}">
                         <label for="simple-search" class="sr-only">Search</label>
@@ -30,10 +30,12 @@
                         </div>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <a href="{{ route('dashboard.bank.create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            <span> Bank </span>
-                        </a>
+                        @can('banks.create')
+                            <a href="{{ route('dashboard.bank.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                <span> Bank </span>
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </form>
@@ -65,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($banks as $key => $bank)
+                        @forelse ($banks as $key => $bank)
                             <tr>
                                 <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                                     {{ $bank->name }}
@@ -74,18 +76,28 @@
                                 <td>{{ $bank->account_name }}</td>
                                 <td style="width: 1%">
                                     <div class="flex items-center justify-end space-x-3">
-                                        <a href="{{ route('dashboard.bank.edit', $bank->id) }}" class="btn btn-text">
-                                            <i class="fas fa-pencil"></i>
-                                            <span> Edit </span>
-                                        </a>
-                                        <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.bank.destroy', $bank->id) }}">
-                                            <i class="fas fa-trash"></i>
-                                            <span> Delete </span>
-                                        </button>
+                                        @can('banks.update')
+                                            <a href="{{ route('dashboard.bank.edit', $bank->id) }}" class="btn btn-text">
+                                                <i class="fas fa-pencil"></i>
+                                                <span> Edit </span>
+                                            </a>
+                                        @endcan
+                                        @can('banks.delete')
+                                            <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.bank.destroy', $bank->id) }}">
+                                                <i class="fas fa-trash"></i>
+                                                <span> Hapus </span>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-0">
+                                <td colspan="4">
+                                    @include('components.empty-state.table')
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -100,5 +112,19 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/bank/index.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            $(document).on('click', '.btn-delete', function ()
+            {
+                let url = $(this).data('url');
+                showConfirmDialog('Apakah anda yakin ingin menghapus data ini?', function ()
+                {
+                    let deleteForm = $('#form-delete');
+                    deleteForm.attr('action', url);
+                    deleteForm.submit();
+                });
+            });
+        });
+    </script>
 @endpush

@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class US02_LogoutTest extends TestCase
@@ -19,16 +18,16 @@ class US02_LogoutTest extends TestCase
 
         $this->user = User::factory()->create([
             'email' => 'user@nurrahma.test'
-        ]); // Buat user dummy
+        ]);
     }
 
-    public function test_user_can_logout()
+    public function test_user_redirected_to_login_page_after_logout()
     {
-        $this->actingAs($this->user); // Login sebagai user
+        $this->actingAs($this->user);
 
-        $this->get('/logout') // Akses route logout
-            ->assertRedirectToRoute('login'); // Cek bahwa user akan diarahkan ke route login
+        $this->get('/logout')
+            ->assertRedirectToRoute('login');
 
-        $this->assertGuest(); // Cek bahwa user tidak terotentikasi
+        $this->assertGuest();
     }
 }

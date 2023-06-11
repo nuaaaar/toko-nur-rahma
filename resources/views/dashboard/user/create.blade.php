@@ -23,55 +23,57 @@
         <div class="card-body">
             <form class="form" action="{{ route('dashboard.user.store') }}" method="POST">
                 @csrf
-                <div class="mt-0">
-                    <label class="label-block">Jenis Pengguna</label>
-                    @error('permissions')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                    <select name="roles[]" class="form-control" required>
-                        <option value="">Pilih Jenis Pengguna</option>
-                        @foreach ($roles->where('name', '!=', 'Superadmin') as $role)
-                            <option value="{{ $role->name }}" {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label for="name" class="label-block">Nama</label>
-                    <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="email" class="label-block">Email</label>
-                    <input type="email" name="email" id="email" class="@error('email') is-invalid @enderror form-control" placeholder="" value="{{ old('email') }}" required>
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="password" class="label-block">Password</label>
-                    <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror form-control" placeholder="" required>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="password_confirmation" class="label-block">Password</label>
-                    <input type="password_confirmation" name="password_confirmation" id="password_confirmation" class="@error('password_confirmation') is-invalid @enderror form-control" placeholder="" required>
-                    @error('password_confirmation')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                <div class="flex flex-col md:grid  md:grid-cols-2 gap-4 mt-0">
+                    <div class="col-span-2">
+                        <label class="label-block">Jenis Pengguna</label>
+                        @error('permissions')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <select name="roles[]" class="form-control" required>
+                            <option value="">Pilih Jenis Pengguna</option>
+                            @foreach ($roles->where('name', '!=', 'Superadmin') as $role)
+                                <option value="{{ $role->name }}" {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="name" class="label-block">Nama</label>
+                        <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="email" class="label-block">Email</label>
+                        <input type="email" name="email" id="email" class="@error('email') is-invalid @enderror form-control" placeholder="" value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="password" class="label-block">Password</label>
+                        <input type="password" name="password" id="password" class="@error('password') is-invalid @enderror form-control" placeholder="" required>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="label-block">Konfirmasi Password</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="@error('password_confirmation') is-invalid @enderror form-control" placeholder="" required>
+                        @error('password_confirmation')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit" class="btn btn-primary" id="btn-create">Simpan</button>
@@ -82,5 +84,11 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/user/create.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            let targetUrl = baseUrl + '/dashboard/user';
+            markActiveMenu(targetUrl);
+        });
+    </script>
 @endpush

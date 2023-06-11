@@ -18,7 +18,7 @@
         <div class="card-body">
             <form class="">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full md:w-3/4">
                         <input type="hidden" name="orderBy" value="{{ request()->orderBy }}">
                         <input type="hidden" name="orderType" value="{{ request()->orderType }}">
                         <label for="simple-search" class="sr-only">Search</label>
@@ -30,10 +30,12 @@
                         </div>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <a href="{{ route('dashboard.supplier.create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            <span> Agen </span>
-                        </a>
+                        @can('suppliers.create')
+                            <a href="{{ route('dashboard.supplier.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                <span> Agen </span>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </form>
@@ -71,12 +73,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($suppliers as $key => $supplier)
+                        @forelse ($suppliers as $key => $supplier)
                             <tr>
                                 <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                                     {{ $supplier->name }}
                                 </th>
-                                <td>{{ $supplier->tin ?? '' }}</td>
+                                <td class="whitespace-nowrap">{{ $supplier->tin ?? '' }}</td>
                                 <td>{{ $supplier->phone_number }}</td>
                                 <td>
                                     <p class="line-clamp-1 max-w-prose" {{ strlen($supplier->address) > 65 ? "data-tooltip-target=tooltip-address-$key" : '' }}>{{ $supplier->address }}</p>
@@ -89,18 +91,28 @@
                                 </td>
                                 <td style="width: 1%">
                                     <div class="flex items-center justify-end space-x-3">
-                                        <a href="{{ route('dashboard.supplier.edit', $supplier->id) }}" class="btn btn-text">
-                                            <i class="fas fa-pencil"></i>
-                                            <span> Edit </span>
-                                        </a>
-                                        <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.supplier.destroy', $supplier->id) }}">
-                                            <i class="fas fa-trash"></i>
-                                            <span> Delete </span>
-                                        </button>
+                                        @can('suppliers.update')
+                                            <a href="{{ route('dashboard.supplier.edit', $supplier->id) }}" class="btn btn-text">
+                                                <i class="fas fa-pencil"></i>
+                                                <span> Edit </span>
+                                            </a>
+                                        @endcan
+                                        @can('suppliers.delete')
+                                            <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.supplier.destroy', $supplier->id) }}">
+                                                <i class="fas fa-trash"></i>
+                                                <span> Hapus </span>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-0">
+                                <td colspan="5">
+                                    @include('components.empty-state.table')
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -115,5 +127,19 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/supplier/index.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            $(document).on('click', '.btn-delete', function ()
+            {
+                let url = $(this).data('url');
+                showConfirmDialog('Apakah anda yakin ingin menghapus data ini?', function ()
+                {
+                    let deleteForm = $('#form-delete');
+                    deleteForm.attr('action', url);
+                    deleteForm.submit();
+                });
+            });
+        });
+    </script>
 @endpush

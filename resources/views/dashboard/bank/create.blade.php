@@ -23,32 +23,34 @@
         <div class="card-body">
             <form class="form" action="{{ route('dashboard.bank.store') }}" method="POST">
                 @csrf
-                <div>
-                    <label for="name" class="label-block">Nama Bank</label>
-                    <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="account" class="label-block">No. Rekening</label>
-                    <input type="text" name="account" id="account" class="@error('account') is-invalid @enderror form-control" placeholder="" value="{{ old('account') }}" required>
-                    @error('account')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="account-name" class="label-block">Atas Nama</label>
-                    <input type="text" name="account_name" id="account-name" class="@error('account_name') is-invalid @enderror form-control" placeholder="" value="{{ old('account_name') }}">
-                    @error('account_name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                <div class="flex flex-col md:grid  md:grid-cols-3 gap-4 mt-0">
+                    <div>
+                        <label for="name" class="label-block">Nama Bank</label>
+                        <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="account" class="label-block">No. Rekening</label>
+                        <input type="text" name="account" id="account" class="@error('account') is-invalid @enderror form-control" placeholder="" value="{{ old('account') }}" required>
+                        @error('account')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="account-name" class="label-block">Atas Nama</label>
+                        <input type="text" name="account_name" id="account-name" class="@error('account_name') is-invalid @enderror form-control" placeholder="" value="{{ old('account_name') }}">
+                        @error('account_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit" class="btn btn-primary" id="btn-create">Simpan</button>
@@ -59,5 +61,11 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/bank/create.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            let targetUrl = baseUrl + '/dashboard/bank';
+            markActiveMenu(targetUrl);
+        });
+    </script>
 @endpush

@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendors/fontawesome5/css/all.min.css') }}">
     @vite('resources/css/app.css')
     @stack('style')
@@ -32,11 +34,16 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @vite('resources/js/app.js')
 
     <script src="{{ asset('js/general/base.js') }}" ></script>
+    <script src="{{ asset('js/general/sidebar.js') }}" ></script>
     <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('vendors/inputmask/inputmask.min.js') }}"></script>
+    <script src="{{ asset('vendors/inputmask/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('js/pages/dashboard.js') }}" ></script>
     @stack('script')
     @if (session('success'))
@@ -46,7 +53,7 @@
     @endif
     @if (session('error'))
         <script>
-            showSuccessDialog("{{ session('error') }}");
+            showErrorDialog("{{ session('error') }}");
         </script>
     @endif
 </body>

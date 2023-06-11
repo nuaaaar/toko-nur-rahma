@@ -6,5 +6,7 @@ return [
     'roles' => 'Jenis Pengguna',
     'users' => 'Pengguna',
     'suppliers' => 'Agen',
-    'banks' => 'Bank'
+    'banks' => 'Bank',
+    'products' => 'Jenis Barang',
+    'procurements' => 'Pengadaan Stok',
 ];

@@ -36,6 +36,8 @@ class RoleAndPermissionSeeder extends Seeder
                 'users.read', 'users.create', 'users.update', 'users.delete',
                 'suppliers.read', 'suppliers.create', 'suppliers.update', 'suppliers.delete',
                 'banks.read', 'banks.create', 'banks.update', 'banks.delete',
+                'products.read', 'products.create', 'products.update', 'products.delete',
+                'procurements.read', 'procurements.create', 'procurements.update', 'procurements.delete',
             ],
             'Admin Pembukuan' => [],
             'Marketing' => [],

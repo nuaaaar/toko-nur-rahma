@@ -17,22 +17,24 @@
     <div class="card">
         <div class="card-body">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div class="w-full md:w-1/2">
+                <div class="w-full md:w-3/4">
                     <form class="flex items-center">
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <i class="fa-light fa-search"></i>
+                                <i class="fal fa-search"></i>
                             </div>
                             <input type="text" name="search" id="simple-search" class="form-control" placeholder="Cari" value="{{ request()->search }}">
                         </div>
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <a href="{{ route('dashboard.role-and-permission.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i>
-                        <span> Jenis Pengguna </span>
-                    </a>
+                    @can('roles.create')
+                        <a href="{{ route('dashboard.role-and-permission.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            <span> Jenis Pengguna </span>
+                        </a>
+                    @endcan
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -63,7 +65,7 @@
                         </tr>
                     </thead>
                     <tbody data-accordion="collapse">
-                        @foreach ($roles as $role)
+                        @forelse ($roles as $role)
                             <tr>
                                 <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                                     {{ $role->name }}
@@ -79,14 +81,18 @@
                                 </td>
                                 <td style="width: 1%">
                                     <div class="flex items-center justify-end space-x-3">
-                                        <a href="{{ route('dashboard.role-and-permission.edit', $role->id) }}" class="btn btn-text">
-                                            <i class="fas fa-pencil"></i>
-                                            <span> Edit </span>
-                                        </a>
-                                        <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.role-and-permission.destroy', $role->id) }}">
-                                            <i class="fas fa-trash"></i>
-                                            <span> Delete </span>
-                                        </button>
+                                        @can('roles.update')
+                                            <a href="{{ route('dashboard.role-and-permission.edit', $role->id) }}" class="btn btn-text">
+                                                <i class="fas fa-pencil"></i>
+                                                <span> Edit </span>
+                                            </a>
+                                        @endcan
+                                        @can('roles.delete')
+                                            <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.role-and-permission.destroy', $role->id) }}">
+                                                <i class="fas fa-trash"></i>
+                                                <span> Hapus </span>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -116,7 +122,13 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-0">
+                                <td colspan="5" class="text-center">
+                                    @include('components.empty-state.table')
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -131,5 +143,19 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/role-and-permission/index.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            $(document).on('click', '.btn-delete', function ()
+            {
+                let url = $(this).data('url');
+                showConfirmDialog('Apakah anda yakin ingin menghapus data ini?', function ()
+                {
+                    let deleteForm = $('#form-delete');
+                    deleteForm.attr('action', url);
+                    deleteForm.submit();
+                });
+            });
+        });
+    </script>
 @endpush

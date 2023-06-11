@@ -68,5 +68,11 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/role-and-permission/edit.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            let targetUrl = baseUrl + '/dashboard/role-and-permission';
+            markActiveMenu(targetUrl);
+        });
+    </script>
 @endpush

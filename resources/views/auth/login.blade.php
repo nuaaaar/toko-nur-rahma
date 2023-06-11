@@ -54,5 +54,22 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/auth/login.js') }}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('.toggle-password').click(function()
+            {
+                $(this).find('i').toggleClass('hidden');
+                var input = $($(this).data('toggle'));
+                if (input.attr('type') == 'password')
+                {
+                    input.attr('type', 'text');
+                }
+                else
+                {
+                    input.attr('type', 'password');
+                }
+            });
+        });
+    </script>
 @endpush

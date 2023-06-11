@@ -13,7 +13,7 @@ use Throwable;
 
 class BankController extends Controller
 {
-    public $bankService;
+    protected $bankService;
 
     public function __construct(BankService $bankService)
     {

@@ -23,41 +23,43 @@
         <div class="card-body">
             <form class="form" action="{{ route('dashboard.supplier.store') }}" method="POST">
                 @csrf
-                <div>
-                    <label for="name" class="label-block">Nama</label>
-                    <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="tin" class="label-block">NPWP</label>
-                    <input type="text" name="tin" id="tin" class="@error('tin') is-invalid @enderror form-control" placeholder="" value="{{ old('tin') }}" required>
-                    @error('tin')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="phone-number" class="label-block">Nomor Telepon</label>
-                    <input type="text" name="phone_number" id="phone-number" class="@error('phone_number') is-invalid @enderror form-control" placeholder="" value="{{ old('phone_number') }}">
-                    @error('phone_number')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div>
-                    <label for="address" class="label-block">Alamat</label>
-                    <textarea name="address" id="address" class="@error('address') is-invalid @enderror form-control" rows="5" placeholder="">{{ old('address') }}</textarea>
-                    @error('address')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                <div class="flex flex-col md:grid  md:grid-cols-3 gap-4 mt-0">
+                    <div>
+                        <label for="name" class="label-block">Nama</label>
+                        <input type="text" name="name" id="name" class="@error('name') is-invalid @enderror form-control" placeholder="" value="{{ old('name') }}" required>
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="tin" class="label-block">NPWP</label>
+                        <input type="text" name="tin" id="tin" class="@error('tin') is-invalid @enderror form-control" placeholder="" value="{{ old('tin') }}" required>
+                        @error('tin')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="phone-number" class="label-block">Nomor Telepon</label>
+                        <input type="text" name="phone_number" id="phone-number" class="@error('phone_number') is-invalid @enderror form-control" placeholder="" value="{{ old('phone_number') }}">
+                        @error('phone_number')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="col-span-3">
+                        <label for="address" class="label-block">Alamat</label>
+                        <textarea name="address" id="address" class="@error('address') is-invalid @enderror form-control" rows="5" placeholder="">{{ old('address') }}</textarea>
+                        @error('address')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit" class="btn btn-primary" id="btn-create">Simpan</button>
@@ -68,5 +70,11 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('js/pages/dashboard/supplier/create.js') }}"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            let targetUrl = baseUrl + '/dashboard/supplier';
+            markActiveMenu(targetUrl);
+        });
+    </script>
 @endpush

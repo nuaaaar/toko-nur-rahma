@@ -13,7 +13,7 @@
                     <span class="sr-only">Open user menu</span>
                     <div class="bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                         <img class="w-8 h-8 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                            src="{{ asset('images/illustrations/user.jpg') }}"
                             alt="user photo">
                     </div>
                     <div class="text-left hidden md:block">

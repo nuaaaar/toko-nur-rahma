@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class US03_ForgotPasswordTest extends TestCase
@@ -19,18 +18,18 @@ class US03_ForgotPasswordTest extends TestCase
 
         $this->user = User::factory()->create([
             'email' => 'yanuar.fabien.yf@gmail.com'
-        ]); // Buat user dummy dengan email aktif
+        ]);
     }
 
     public function test_user_can_request_reset_password_link_with_correct_email()
     {
-        $data = [ // Data yang akan dikirim
+        $data = [
             'email' => $this->user->email
         ];
 
-        $this->post('/forgot-password', $data) // Kirim data ke endpoint /forgot-password
-        ->assertRedirectToRoute('login') // Cek bahwa user akan diarahkan ke route login
-        ->assertSessionHas('success', __('passwords.sent')); // Cek bahwa user akan menerima pesan sukses
+        $this->post('/forgot-password', $data)
+        ->assertRedirectToRoute('login')
+        ->assertSessionHas('success', __('passwords.sent'));
 
     }
 

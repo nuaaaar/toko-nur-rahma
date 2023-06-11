@@ -55,7 +55,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menambahkan data pengguna'); // Redirect ke halaman pengguna
+            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -82,7 +82,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil mengubah data pengguna'); // Redirect ke halaman pengguna
+            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil mengubah data'); // Redirect ke halaman pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -96,7 +96,7 @@ class UserController extends Controller
         try {
             $this->userService->delete($id); // Hapus data pengguna
 
-            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menghapus data pengguna'); // Redirect ke halaman pengguna
+            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menghapus data'); // Redirect ke halaman pengguna
         } catch (Throwable $e) {
             return redirect()->back()->with('error', $e); // Jika gagal, maka redirect ke halaman login dengan pesan error
         }

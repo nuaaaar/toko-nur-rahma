@@ -13,7 +13,7 @@ use Throwable;
 
 class SupplierController extends Controller
 {
-    public $supplierService;
+    protected $supplierService;
 
     public function __construct(SupplierService $supplierService)
     {

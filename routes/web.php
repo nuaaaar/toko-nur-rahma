@@ -16,12 +16,13 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware('guest')->group(function()
 {
+    Route::get('/', function () {
+        return redirect()->route(auth()->check() ? 'dashboard.index' : 'login');
+    });
+
     Route::get('login', [Auth\LoginController::class, 'index']);
 
     Route::post('login', [Auth\LoginController::class, 'login'])->name('login');
@@ -46,7 +47,32 @@ Route::middleware('auth')->group(function()
     {
         Route::resource('bank', Dashboard\BankController::class);
 
+        Route::resource('customer', Dashboard\CustomerController::class);
+
+        Route::resource('customer-return', Dashboard\CustomerReturnController::class);
+
+        Route::resource('delivery-order', Dashboard\DeliveryOrderController::class);
+
+        Route::resource('procurement', Dashboard\ProcurementController::class);
+
+        Route::resource('product', Dashboard\ProductController::class);
+
+        Route::resource('product-stock', Dashboard\ProductStockController::class);
+
+        Route::resource('profit-loss', Dashboard\ProfitLossController::class)->only('index');
+
+        Route::resource('purchase-order', Dashboard\PurchaseOrderController::class);
+
+        Route::prefix('purchase-order/{purchase_order}')->name('purchase-order.')->group(function()
+        {
+            Route::put('change-status', Dashboard\PurchaseOrderChangeStatusController::class)->name('change-status');
+        });
+
         Route::resource('role-and-permission', Dashboard\RoleAndPermissionController::class);
+
+        Route::resource('sale', Dashboard\SaleController::class);
+
+        Route::resource('stock-opname', Dashboard\StockOpnameController::class);
 
         Route::resource('supplier', Dashboard\SupplierController::class);
 

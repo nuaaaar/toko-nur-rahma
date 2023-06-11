@@ -22,6 +22,8 @@ class SupplierServiceImplement extends Service implements SupplierService{
 
     public function getSuppliers(string $orderBy, string $orderType, ?string $search, int $limit)
     {
-        return $this->mainRepository->search($search)->orderData($orderBy, $orderType)->paginate($limit);
+        $query = $this->mainRepository->search($search)->orderData($orderBy, $orderType);
+
+        return $limit > 0 ? $query->paginate($limit) : $query->get();
     }
 }
