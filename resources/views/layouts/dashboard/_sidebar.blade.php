@@ -146,7 +146,7 @@
             @endcan
             @can('stock-opnames.read')
                 <li class="menu-item">
-                    <a href="#">
+                    <a href="{{ route('dashboard.stock-opname.index') }}">
                         <div class="menu-icon">
                             <i data-feather="clipboard"></i>
                         </div>
