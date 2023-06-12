@@ -195,7 +195,7 @@
                 let physical = parseInt($(this).find('input[name*="[physical]"]').val()) || 0;
                 let returnedToSupplier = parseInt($(this).find('input[name*="[returned_to_supplier]"]').val()) || 0;
                 let actual = physical + returnedToSupplier;
-                let difference = actual - system;
+                let difference = Math.abs(actual - system);
 
                 $(this).find('.actual-text').text(number_format(actual, 0, ',', '.'));
                 $(this).find('.difference-text').text(number_format(difference, 0, ',', '.'));

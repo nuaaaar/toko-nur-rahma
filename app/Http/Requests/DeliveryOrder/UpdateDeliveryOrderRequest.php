@@ -38,7 +38,7 @@ class UpdateDeliveryOrderRequest extends FormRequest
     {
         return [
             'purchase_order_id' => 'Invoice Purchase Order',
-            'date' => 'Tanggal Pengembalian',
+            'date' => 'Tanggal Retur',
             'receiver_name' => 'Nama Penerima',
             'receiver_phone_number' => 'Nomor Telepon Penerima',
             'receiver_address' => 'Alamat Penerima',
