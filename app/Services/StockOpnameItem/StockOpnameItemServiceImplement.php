@@ -24,7 +24,7 @@ class StockOpnameItemServiceImplement extends Service implements StockOpnameItem
     {
         $items = array_map(function($item) use ($stockOpname){
             $item['stock_opname_id'] = $stockOpname;
-            $item['difference'] = ($item['physical'] + $item['returned_to_supplier']) - $item['system'];
+            $item['difference'] = abs(($item['physical'] + $item['returned_to_supplier']) - $item['system']);
             $item['created_at'] = now();
             $item['updated_at'] = now();
 

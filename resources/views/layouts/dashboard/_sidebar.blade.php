@@ -180,6 +180,16 @@
                     </ul>
                 </li>
             @endcanany
+            @can('backup-data.read')
+                <li class="menu-item">
+                    <a href="{{ route('dashboard.backup-data.index') }}">
+                        <div class="menu-icon">
+                            <i data-feather="database"></i>
+                        </div>
+                        <span class="menu-text">Pencadangan Data</span>
+                    </a>
+                </li>
+            @endcan
         </ul>
     </div>
 </aside>

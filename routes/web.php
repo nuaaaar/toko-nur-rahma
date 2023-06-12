@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Export;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 
@@ -45,6 +46,8 @@ Route::middleware('auth')->group(function()
 
     Route::prefix('dashboard')->name('dashboard.')->group(function()
     {
+        Route::resource('backup-data', Dashboard\BackupDataController::class)->only('index');
+
         Route::resource('bank', Dashboard\BankController::class);
 
         Route::resource('customer', Dashboard\CustomerController::class);
@@ -77,6 +80,21 @@ Route::middleware('auth')->group(function()
         Route::resource('supplier', Dashboard\SupplierController::class);
 
         Route::resource('user', Dashboard\UserController::class);
+    });
+
+    Route::prefix('export')->name('export.')->group(function()
+    {
+        Route::get('customer-return', Export\CustomerReturnExportController::class)->name('customer-return');
+
+        Route::get('procurement', Export\ProcurementExportController::class)->name('procurement');
+
+        Route::get('product', Export\ProductExportController::class)->name('product');
+
+        Route::get('purchase-order', Export\PurchaseOrderExportController::class)->name('purchase-order');
+
+        Route::get('sale', Export\SaleExportController::class)->name('sale');
+
+        Route::get('stock-opname', Export\StockOpnameExportController::class)->name('stock-opname');
     });
 });
 

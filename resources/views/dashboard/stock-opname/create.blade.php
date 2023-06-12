@@ -190,7 +190,7 @@
                 let physical = parseInt($(this).find('input[name*="[physical]"]').val()) || 0;
                 let returnedToSupplier = parseInt($(this).find('input[name*="[returned_to_supplier]"]').val()) || 0;
                 let actual = physical + returnedToSupplier;
-                let difference = actual - system;
+                let difference = Math.abs(actual - system);
 
                 $(this).find('.actual-text').text(number_format(actual, 0, ',', '.'));
                 $(this).find('.difference-text').text(number_format(difference, 0, ',', '.'));
@@ -238,7 +238,7 @@
                             <input type="hidden" name="stock_opname_items[index][system]" value="${lastStock.stock}">
                         </td>
                         <td class="text-right difference-text">
-                            ${0 - lastStock.stock}
+                            ${lastStock.stock}
                         </td>
                         <td>
                             <input type="text" class="form-control" name="stock_opname_items[index][description]" value="">

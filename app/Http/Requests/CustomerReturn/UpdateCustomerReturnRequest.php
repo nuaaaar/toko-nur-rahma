@@ -37,7 +37,7 @@ class UpdateCustomerReturnRequest extends FormRequest
     {
         return [
             'sale_id' => 'Invoice Penjualan',
-            'date' => 'Tanggal Pengembalian',
+            'date' => 'Tanggal Retur',
             'category' => 'Kategori',
             'total' => 'Total',
             'customer_return_items' => 'Barang Dikembalikan',
