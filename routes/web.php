@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Export;
+use App\Http\Controllers\Import;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 
@@ -62,6 +63,10 @@ Route::middleware('auth')->group(function()
         Route::resource('procurement', Dashboard\ProcurementController::class);
 
         Route::resource('product', Dashboard\ProductController::class);
+
+        Route::resource('product-empty-stock', Dashboard\ProductEmptyStockController::class);
+
+        Route::resource('product-import', Dashboard\ProductImportController::class)->only('index', 'store');
 
         Route::resource('product-stock', Dashboard\ProductStockController::class);
 

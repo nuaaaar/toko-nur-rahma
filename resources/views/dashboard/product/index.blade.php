@@ -18,7 +18,7 @@
         <div class="card-body">
             <form class="">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                    <div class="w-full md:w-3/4">
+                    <div class="w-full md:w-3/5">
                         <input type="hidden" name="orderBy" value="{{ request()->orderBy }}">
                         <input type="hidden" name="orderType" value="{{ request()->orderType }}">
                         <label for="simple-search" class="sr-only">Search</label>
@@ -56,6 +56,12 @@
                             </ul>
                             <button class="btn btn-sm btn-primary w-full mt-2">Terapkan</button>
                         </div>
+                        @can('products.create')
+                            <a href="{{ route('dashboard.product-import.index') }}" class="btn btn-primary">
+                                <i class="fas fa-download"></i>
+                                <span> Import </span>
+                            </a>
+                        @endcan
                         @can('products.create')
                             <a href="{{ route('dashboard.product.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i>
