@@ -11,6 +11,10 @@ class Sale extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function bank()
     {
         return $this->belongsTo(Bank::class);

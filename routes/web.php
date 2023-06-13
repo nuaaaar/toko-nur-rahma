@@ -78,6 +78,11 @@ Route::middleware('auth')->group(function()
 
         Route::resource('sale', Dashboard\SaleController::class);
 
+        Route::prefix('sale/{sale}')->name('sale.')->group(function()
+        {
+            Route::get('invoice', Dashboard\SaleInvoiceController::class)->name('invoice');
+        });
+
         Route::resource('stock-opname', Dashboard\StockOpnameController::class);
 
         Route::resource('supplier', Dashboard\SupplierController::class);
