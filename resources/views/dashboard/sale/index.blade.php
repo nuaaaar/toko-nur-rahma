@@ -102,7 +102,10 @@
                         <div class="flex flex-wrap justify-center md:justify-between items-center">
                             <div class="text-center md:text-left">
                                 <h4 class="font-bold mb-0">{{ $sale->customer->name ?? 'Data tidak tersedia' }}</h4>
-                                <p class="mb-0">{{ $sale->invoice_number }}</p>
+                                <a href="{{ route('dashboard.sale.invoice', $sale->id) }}" class="mb-0 flex items-center gap-2 hover:text-primary-600" target="_blank">
+                                    <span>{{ $sale->invoice_number }}</span>
+                                    <i class="fal fa-print"></i>
+                                </a>
                             </div>
                             <div class="text-center flex flex-col-reverse items-center md:block md:text-right">
                                 <div class="badge badge-success uppercase text-sm">{{ $sale->payment_method == 'cash' ? 'Tunai' : $sale->payment_method . ' ' . $sale->bank->name }}</div>
