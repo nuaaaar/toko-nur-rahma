@@ -72,9 +72,9 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('empty-product-stocks.read')
+                        @can('product-empty-stock.read')
                             <li class="submenu-item">
-                                <a href="#">
+                                <a href="{{ route('dashboard.product-empty-stock.index') }}">
                                     <span class="menu-text">Stok Kosong</span>
                                 </a>
                             </li>

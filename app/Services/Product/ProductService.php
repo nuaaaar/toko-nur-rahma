@@ -11,4 +11,6 @@ interface ProductService extends BaseService{
     public function getProductsWithCategoryName(string $orderBy, string $orderType, ?array $filters, ?string $search, int $limit);
 
     public function getAllProductsWithLatestStock(string $orderBy, string $orderType, ?array $filters, ?string $search, int $limit);
+
+    public function getEmptyStockProducts(string $orderBy, string $orderType, ?array $filters, ?string $search);
 }

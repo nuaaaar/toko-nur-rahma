@@ -3,7 +3,11 @@
 <meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
 <style type="text/css">
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+  @import url(https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900);
+
+  * {
+    font-family: 'Inter', sans-serif;
+  }
 
   body {
     background: rgb(204, 204, 204);
@@ -42,37 +46,37 @@
         <table width="100%">
             <tr>
                 <td>
-                    <strong style="font-size: 24px; color: red;">TAKATIKITUKU</strong>
+                    <strong style="font-size: 24px; color:  rgb(234 88 12)!important;">CV. Nur Rahma</strong>
                     <br>
                     &nbsp;
                 </td>
                 <td align="right">
                     <b>INVOICE</b>
                     <br>
-                    <small style="color: red;">INV/20230603/MPL/3269414873</small>
+                    <small style="color:  rgb(234 88 12)!important;">{{ $sale->invoice_number }}</small>
                 </td>
             </tr>
         </table>
         <div style="display: flex">
-            <table width="50%">
+            <table style="flex-grow: 1">
                 <tr style="font-size: 14px;">
                     <td colspan="2">
                         <strong>DITERBITKAN ATAS NAMA</strong>
                     </td>
                 </tr>
                 <tr style="font-size: 12px;">
-                    <td width="20%">
+                    <td width="10%">
                         Penjual
                     </td>
                     <td>
-                        : <strong>NR AQUATICS</strong>
+                        : <strong>Toko Nur Rahma</strong>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" height="100%"></td>
                 </tr>
             </table>
-            <table width="50%">
+            <table>
                 <tr style="font-size: 14px;">
                     <td colspan="3">
                         <strong>UNTUK</strong>
@@ -86,29 +90,18 @@
                         :
                     </td>
                     <td style="vertical-align: top;">
-                        <strong>EDI</strong>
+                        <strong>{{ $sale->customer->name ?? '' }}</strong>
                     </td>
                 </tr>
                 <tr style="font-size: 12px;">
-                    <td width="30%" style="vertical-align: top;">
+                    <td width="30%" style="vertical-align: top; text-wrap: nowrap">
                         Tanggal Pembelian
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
                     <td style="vertical-align: top;">
-                        <strong>03 Juni 2023</strong>
-                    </td>
-                </tr>
-                <tr style="font-size: 12px;">
-                    <td width="30%" style="vertical-align: top;">
-                        Alamat Pengiriman
-                    </td>
-                    <td width="2%" style="vertical-align: top;">
-                        :
-                    </td>
-                    <td style="vertical-align: top;">
-                        <strong>Ed* Suha*** (*********0842) Ed* Suha*** (*********0842) Ed* Suha*** (*********0842) Ed* Suha*** (*********0842)</strong>
+                        <strong>{{ $sale->date->isoFormat('D MMMM Y'); }}</strong>
                     </td>
                 </tr>
             </table>
@@ -134,22 +127,22 @@
             <tr>
                 <td height="1" style="border-bottom: 2px solid black;" colspan="4"></td>
             </tr>
-            <tr style="font-size: 12px;">
-                <td width="50%" style="padding: 10px;">
-                    <strong style="color: red; font-size: 14px;">New Life Spectrum NLS Thera A 280g small</strong>
-                    <br>
-                    <small>Berat: 400 gr</small>
-                </td>
-                <td width="10%" align="right">
-                    1
-                </td>
-                <td width="20%" align="right">
-                    Rp.309.000
-                </td>
-                <td width="20%" align="right">
-                    Rp.309.000
-                </td>
-            </tr>
+            @foreach ($sale->saleItems as $saleItem)
+                <tr style="font-size: 12px;">
+                    <td width="50%" style="padding: 10px;">
+                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $saleItem->product->name }} / {{ $saleItem->product->unit }}</strong>
+                    </td>
+                    <td width="10%" align="right">
+                        {{ $saleItem->qty }}
+                    </td>
+                    <td width="20%" align="right">
+                        Rp{{ number_format($saleItem->selling_price, 0, ',', '.') }}
+                    </td>
+                    <td width="20%" align="right">
+                        Rp{{ number_format($saleItem->selling_price_total, 0, ',', '.') }}
+                    </td>
+                </tr>
+            @endforeach
             <tr>
                 <td height="1" style="border-bottom: 0.5px solid gray;" colspan="4"></td>
             </tr>
@@ -159,41 +152,10 @@
             <tr style="font-size: 12px;">
                 <td width="50%" height="10"></td>
                 <td width="20%" colspan="2" align="left">
-                    <strong>TOTAL HARGA (1 BARANG)</strong>
+                    <strong>TOTAL HARGA ({{ $sale->saleItems->sum('qty') }} BARANG)</strong>
                 </td>
                 <td width="20%" align="right">
-                    Rp.309.000
-                </td>
-            </tr>
-            <tr style="font-size: 12px;">
-                <td width="50%"></td>
-                <td width="20%" colspan="2" align="left">
-                    Total Ongkos Kirim (400 gr)
-                </td>
-                <td width="20%" align="right">
-                    Rp.9.000
-                </td>
-            </tr>
-            <tr style="font-size: 12px;">
-                <td width="50%"></td>
-                <td width="20%" colspan="2" align="left">
-                    Ongkos Kirim diteruskan ke Kurir
-                </td>
-                <td width="20%" align="right">
-                    - Rp.9.000
-                </td>
-            </tr>
-            <tr style="font-size: 12px;">
-                <td width="50%" height="10"></td>
-                <td width="50%" colspan="3" height="10" style="border-bottom: 0.3px solid gray;"></td>
-            </tr>
-            <tr style="font-size: 12px;">
-                <td width="50%" height="10"></td>
-                <td width="20%" colspan="2" align="left">
-                    <strong>TOTAL PENJUALAN</strong>
-                </td>
-                <td width="20%" align="right">
-                    Rp.300.000
+                    Rp{{ number_format($sale->total, 0, ',', '.') }}
                 </td>
             </tr>
             <tr>
@@ -201,33 +163,33 @@
             </tr>
         </table>
         <table width="100%" style="margin-top: 20px">
-            <tr>
-                <td width="60%">
-                    <small>
-                        Kurir:
-                        <br>
-                        <strong>
-                            SiCepat - Regular Package
-                        </strong>
-                    </small>
-                </td>
-                <td></td>
-            </tr>
             <tr><td height="50"></td></tr>
             <tr>
-                <td width="60%">
+                <td width="60%" style="vertical-align: bottom;">
                     <small>
                         Invoice ini sah dan diproses oleh komputer
                         <br>
-                        Silakan hubungi <strong style="color: red;">TAKATIKITUKU Care</strong> apabila kamu membutuhkan bantuan.
+                        Silakan hubungi <strong style="color:  rgb(234 88 12)!important;">Penjual</strong> apabila kamu membutuhkan bantuan.
                     </small>
                 </td>
                 <td align="right" style="vertical-align: bottom;">
                     <small>
-                        <i>Terakhir diupdate: 03 Juni 2023 15:21 WIB</i>
+                        <i>Diperbarui pada: {{ $sale->updated_at->isoFormat('DD MMMM Y HH:mm') }} WITA</i>
                     </small>
                 </td>
             </tr>
         </table>
     </div>
 </page>
+
+<script>
+    function printPage()
+    {
+        window.print();
+    }
+    window.onload = function ()
+    {
+        printPage();
+    }
+</script>
+

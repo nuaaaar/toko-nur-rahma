@@ -29,31 +29,31 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $request['orderBy'] = $request->orderBy ?? 'name'; // Atur default orderBy
-        $request['orderType'] = $request->orderType ?? 'asc'; // Atur default orderType
+        $request['orderBy'] = $request->orderBy ?? 'name';
+        $request['orderType'] = $request->orderType ?? 'asc';
 
-        $data['categories'] = $this->categoryService->all(); // Ambil data hak akses
+        $data['categories'] = $this->categoryService->all();
         $data['products'] = $this->productService->getProductsWithCategoryName($request->orderBy, $request->orderType, $request->filters, $request->search, 10);
 
-        return view('dashboard.product.index', $data); // Tampilkan halaman jenis barang
+        return view('dashboard.product.index', $data);
     }
 
     public function create()
     {
-        $data['categories'] = $this->categoryService->all(); // Ambil data hak akses
+        $data['categories'] = $this->categoryService->all();
 
-        return view('dashboard.product.create', $data); // Tampilkan halaman tambah jenis barang
+        return view('dashboard.product.create', $data);
     }
 
     public function store(CreateProductRequest $request)
     {
         DB::beginTransaction();
         try {
-            $this->productService->create($request->except('_token')); // Buat data jenis barang
+            $this->productService->create($request->except('_token'));
 
             DB::commit();
 
-            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman jenis barang
+            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menambahkan data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -64,23 +64,23 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $data['product'] = $this->productService->findOrFail($id); // Ambil data jenis barang berdasarkan id
-        $data['categories'] = $this->categoryService->all(); // Ambil data hak akses
+        $data['product'] = $this->productService->findOrFail($id);
+        $data['categories'] = $this->categoryService->all();
 
-        return view('dashboard.product.edit', $data); // Tampilkan halaman edit jenis barang
+        return view('dashboard.product.edit', $data);
     }
 
     public function update(UpdateProductRequest $request, $id)
     {
         DB::beginTransaction();
         try{
-            $product = $this->productService->findOrFail($id); // Ambil data jenis barang berdasarkan id
+            $product = $this->productService->findOrFail($id);
 
-            $product->update($request->except('_token')); // Buat data jenis barang
+            $product->update($request->except('_token'));
 
             DB::commit();
 
-            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil mengubah data'); // Redirect ke halaman jenis barang
+            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil mengubah data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -92,11 +92,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            $this->productService->delete($id); // Hapus data jenis barang
+            $this->productService->delete($id);
 
-            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menghapus data'); // Redirect ke halaman jenis barang
+            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menghapus data');
         } catch (Throwable $e) {
-            return redirect()->back()->with('error', $e); // Jika gagal, maka redirect ke halaman login dengan pesan error
+            return redirect()->back()->with('error', $e);
         }
     }
 }
