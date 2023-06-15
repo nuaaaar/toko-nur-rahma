@@ -38,7 +38,7 @@ class ProductImportController extends Controller
             DB::rollBack();
             Log::error($e);
 
-            return abort(500);
+            return redirect()->back()->with('error', 'Gagal mengimport data, pastikan format sudah sesuai');
         }
     }
 }
