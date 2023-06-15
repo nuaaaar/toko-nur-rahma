@@ -73,6 +73,15 @@ class PurchaseOrderServiceImplement extends Service implements PurchaseOrderServ
         return $this->mainRepository->withRelations(['purchaseOrderItems.product.latestProductStock', 'customer', 'deliveryOrders', 'deliveryOrderItems.product', 'user'])->findByInvoiceNumber($invoiceNumber);
     }
 
+    public function getStatuses()
+    {
+        return [
+            'menunggu' => 'Menunggu',
+            'diproses' => 'Diproses',
+            'selesai' => 'Selesai',
+        ];
+    }
+
     protected function generateInvoiceNumber(string $date)
     {
         $year = date('Y', strtotime($date));

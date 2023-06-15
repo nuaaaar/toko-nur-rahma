@@ -11,6 +11,10 @@ class DeliveryOrder extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function deliveryOrderItems()
     {
         return $this->hasMany(DeliveryOrderItem::class);

@@ -22,7 +22,7 @@ class ProfitLossController extends Controller
         $this->procurementService = $procurementService;
         $this->saleService = $saleService;
 
-        $this->middleware(['permission:profit-loss.read'], ['only' => ['index']]);
+        $this->middleware(['permission:profit-losses.read'], ['only' => ['index']]);
     }
 
     public function index(Request $request)

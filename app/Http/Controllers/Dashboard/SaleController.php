@@ -79,7 +79,7 @@ class SaleController extends Controller
             $this->saleItemService->insertSaleItems($request->sale_items, $sale->id);
 
             DB::commit();
-            return redirect()->route('dashboard.sale.index')->with('success', 'Berhasil menambahkan data');
+            return redirect()->route('dashboard.sale.index')->with('success', 'Berhasil menambah data');
         }catch(\Exception $e){
             DB::rollBack();
             Log::error($e);

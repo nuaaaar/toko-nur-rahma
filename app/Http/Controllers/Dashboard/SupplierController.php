@@ -47,7 +47,7 @@ class SupplierController extends Controller
             $this->supplierService->create($request->except('_token'));
             DB::commit();
 
-            return redirect()->route('dashboard.supplier.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman agen
+            return redirect()->route('dashboard.supplier.index')->with('success', 'Berhasil menambah data'); // Redirect ke halaman agen
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);

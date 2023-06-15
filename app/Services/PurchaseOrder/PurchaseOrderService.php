@@ -15,4 +15,6 @@ interface PurchaseOrderService extends BaseService{
     public function getPurchaseOrders(?string $orderBy = 'date', ?string $orderType = 'asc', ?array $filters = [], ?string $search = null, ?int $limit = 10);
 
     public function changeStatus(int $id, string $status);
+
+    public function getStatuses();
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Services\Sale\SaleService;
-use Illuminate\Http\Request;
 
 class SaleInvoiceController extends Controller
 {

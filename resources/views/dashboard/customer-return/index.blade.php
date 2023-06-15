@@ -128,6 +128,10 @@
                     <div class="card-footer">
                         <div class="flex flex-col md:grid md:grid-cols-2 md:items-center">
                             <div class="flex items-center space-x-3 justify-end md:justify-start">
+                                <a href="{{ route('dashboard.customer-return.invoice', $customer_return->id) }}" class="btn btn-text" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                    <span> Print </span>
+                                </a>
                                 @can('customer-returns.update')
                                     <a href="{{ route('dashboard.customer-return.edit', $customer_return->id) }}" class="btn btn-text">
                                         <i class="fas fa-pencil"></i>

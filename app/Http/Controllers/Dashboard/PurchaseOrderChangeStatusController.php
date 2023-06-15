@@ -24,7 +24,7 @@ class PurchaseOrderChangeStatusController extends Controller
         $this->saleService = $saleService;
         $this->saleItemService = $saleItemService;
 
-        $this->middleware('permission:purchase-order-change-status')->only('update');
+        $this->middleware('permission:purchase-orders.change-status')->only('update');
 
     }
 

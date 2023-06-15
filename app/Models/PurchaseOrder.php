@@ -11,6 +11,10 @@ class PurchaseOrder extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);

@@ -58,13 +58,28 @@ Route::middleware('auth')->group(function()
 
         Route::resource('customer-return', Dashboard\CustomerReturnController::class);
 
+        Route::prefix('customer-return/{customer_return}')->name('customer-return.')->group(function()
+        {
+            Route::get('invoice', Dashboard\CustomerReturnInvoiceController::class)->name('invoice');
+        });
+
         Route::resource('delivery-order', Dashboard\DeliveryOrderController::class);
+
+        Route::prefix('delivery-order/{delivery_order}')->name('delivery-order.')->group(function()
+        {
+            Route::get('invoice', Dashboard\DeliveryOrderInvoiceController::class)->name('invoice');
+        });
 
         Route::resource('procurement', Dashboard\ProcurementController::class);
 
+        Route::prefix('procurement/{procurement}')->name('procurement.')->group(function()
+        {
+            Route::get('invoice', Dashboard\ProcurementInvoiceController::class)->name('invoice');
+        });
+
         Route::resource('product', Dashboard\ProductController::class);
 
-        Route::resource('product-empty-stock', Dashboard\ProductEmptyStockController::class);
+        Route::resource('empty-product-stock', Dashboard\EmptyProductStockController::class);
 
         Route::resource('product-import', Dashboard\ProductImportController::class)->only('index', 'store');
 
@@ -77,6 +92,8 @@ Route::middleware('auth')->group(function()
         Route::prefix('purchase-order/{purchase_order}')->name('purchase-order.')->group(function()
         {
             Route::put('change-status', Dashboard\PurchaseOrderChangeStatusController::class)->name('change-status');
+
+            Route::get('invoice', Dashboard\PurchaseOrderInvoiceController::class)->name('invoice');
         });
 
         Route::resource('role-and-permission', Dashboard\RoleAndPermissionController::class);

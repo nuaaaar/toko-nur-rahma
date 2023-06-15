@@ -7,7 +7,7 @@ use App\Services\Category\CategoryService;
 use App\Services\Product\ProductService;
 use Illuminate\Http\Request;
 
-class ProductEmptyStockController extends Controller
+class EmptyProductStockController extends Controller
 {
     protected $categoryService;
 
@@ -18,7 +18,7 @@ class ProductEmptyStockController extends Controller
         $this->categoryService = $categoryService;
         $this->productService = $productService;
 
-        $this->middleware(['permission:product-empty-stock.read'])->only(['index']);
+        $this->middleware(['permission:empty-product-stocks.read'])->only(['index']);
     }
 
     public function index(Request $request)
@@ -29,6 +29,6 @@ class ProductEmptyStockController extends Controller
         $data['categories'] = $this->categoryService->all();
         $data['products'] = $this->productService->getEmptyStockProducts($request->orderBy, $request->orderType, $request->filters, $request->search);
 
-        return view('dashboard.product-empty-stock.index', $data);
+        return view('dashboard.empty-product-stock.index', $data);
     }
 }

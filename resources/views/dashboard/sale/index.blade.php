@@ -102,10 +102,7 @@
                         <div class="flex flex-wrap justify-center md:justify-between items-center">
                             <div class="text-center md:text-left">
                                 <h4 class="font-bold mb-0">{{ $sale->customer->name ?? 'Data tidak tersedia' }}</h4>
-                                <a href="{{ route('dashboard.sale.invoice', $sale->id) }}" class="mb-0 flex items-center gap-2 hover:text-primary-600" target="_blank">
-                                    <span>{{ $sale->invoice_number }}</span>
-                                    <i class="fal fa-print"></i>
-                                </a>
+                                <p class="mb-0">{{ $sale->invoice_number }}</p>
                             </div>
                             <div class="text-center flex flex-col-reverse items-center md:block md:text-right">
                                 <div class="badge badge-success uppercase text-sm">{{ $sale->payment_method == 'cash' ? 'Tunai' : $sale->payment_method . ' ' . $sale->bank->name }}</div>
@@ -137,6 +134,10 @@
                     <div class="card-footer">
                         <div class="flex flex-col md:grid  md:grid-cols-2 md:items-center">
                             <div class="flex items-center space-x-3 justify-end md:justify-start">
+                                <a href="{{ route('dashboard.sale.invoice', $sale->id) }}" class="btn btn-text" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                    <span>Print</span>
+                                </a>
                                 @if ($sale->purchase_order_id == null)
                                     @can('sales.update')
                                         <a href="{{ route('dashboard.sale.edit', $sale->id) }}" class="btn btn-text">

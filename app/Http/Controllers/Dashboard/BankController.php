@@ -47,7 +47,7 @@ class BankController extends Controller
             $this->bankService->create($request->except('_token'));
             DB::commit();
 
-            return redirect()->route('dashboard.bank.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman bank
+            return redirect()->route('dashboard.bank.index')->with('success', 'Berhasil menambah data'); // Redirect ke halaman bank
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);

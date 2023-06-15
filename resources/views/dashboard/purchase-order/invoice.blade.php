@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title> Invoice </title>
+<title> Purchase Order </title>
 <meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
 <style type="text/css">
@@ -51,9 +51,9 @@
                     &nbsp;
                 </td>
                 <td align="right">
-                    <b>INVOICE</b>
+                    <b>PURCHASE ORDER</b>
                     <br>
-                    <small style="color:  rgb(234 88 12)!important;">{{ $sale->invoice_number }}</small>
+                    <small style="color:  rgb(234 88 12)!important;">{{ $purchase_order->invoice_number }}</small>
                 </td>
             </tr>
         </table>
@@ -84,39 +84,26 @@
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="30%" style="vertical-align: top;">
-                        Pembeli
+                        Pemesan
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
                     <td style="vertical-align: top;">
-                        <strong>{{ $sale->customer->name ?? '' }}</strong>
+                        <strong>{{ $purchase_order->customer->name ?? '' }}</strong>
                     </td>
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="30%" style="vertical-align: top; text-wrap: nowrap">
-                        Tanggal Pembelian
+                        Tanggal PO
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
                     <td style="vertical-align: top;">
-                        <strong>{{ $sale->date->isoFormat('D MMMM Y'); }}</strong>
+                        <strong>{{ $purchase_order->date->isoFormat('D MMMM Y'); }}</strong>
                     </td>
                 </tr>
-                @if ($sale->purchaseOrder != null)
-                    <tr style="font-size: 12px;">
-                        <td width="30%" style="vertical-align: top; text-wrap: nowrap">
-                            Nomor PO
-                        </td>
-                        <td width="2%" style="vertical-align: top;">
-                            :
-                        </td>
-                        <td style="vertical-align: top;">
-                            <strong>{{ $sale->purchaseOrder->invoice_number }}</strong>
-                        </td>
-                    </tr>
-                @endif
             </table>
         </div>
         <table width="100%" style="margin-top: 20px;">
@@ -140,19 +127,19 @@
             <tr>
                 <td height="1" style="border-bottom: 2px solid black;" colspan="4"></td>
             </tr>
-            @foreach ($sale->saleItems as $saleItem)
+            @foreach ($purchase_order->purchaseOrderItems as $purchaseOrderItem)
                 <tr style="font-size: 12px;">
                     <td width="50%" style="padding: 10px;">
-                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $saleItem->product->name }} / {{ $saleItem->product->unit }}</strong>
+                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $purchaseOrderItem->product->name }} / {{ $purchaseOrderItem->product->unit }}</strong>
                     </td>
                     <td width="10%" align="right">
-                        {{ $saleItem->qty }}
+                        {{ $purchaseOrderItem->qty }}
                     </td>
                     <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price, 0, ',', '.') }}
+                        Rp{{ number_format($purchaseOrderItem->selling_price, 0, ',', '.') }}
                     </td>
                     <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price_total, 0, ',', '.') }}
+                        Rp{{ number_format($purchaseOrderItem->selling_price_total, 0, ',', '.') }}
                     </td>
                 </tr>
             @endforeach
@@ -165,10 +152,10 @@
             <tr style="font-size: 12px;">
                 <td width="50%" height="10"></td>
                 <td width="20%" colspan="2" align="left">
-                    <strong>TOTAL HARGA ({{ $sale->saleItems->sum('qty') }} BARANG)</strong>
+                    <strong>TOTAL HARGA ({{ $purchase_order->purchaseOrderItems->sum('qty') }} BARANG)</strong>
                 </td>
                 <td width="20%" align="right">
-                    <strong>Rp{{ number_format($sale->total, 0, ',', '.') }}</strong>
+                    Rp{{ number_format($purchase_order->total, 0, ',', '.') }}
                 </td>
             </tr>
             <tr>
@@ -191,7 +178,6 @@
                 </td>
             </tr>
         </table>
-
     </div>
 </page>
 

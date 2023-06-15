@@ -55,7 +55,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman pengguna
+            return redirect()->route('dashboard.user.index')->with('success', 'Berhasil menambah data'); // Redirect ke halaman pengguna
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);

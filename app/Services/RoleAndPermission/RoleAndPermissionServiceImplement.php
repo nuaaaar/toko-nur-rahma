@@ -87,6 +87,12 @@ class RoleAndPermissionServiceImplement extends Service implements RoleAndPermis
                 'update',
                 'delete',
             ],
+            'customers' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
             'products' => [
                 'read',
                 'create',
@@ -98,6 +104,52 @@ class RoleAndPermissionServiceImplement extends Service implements RoleAndPermis
                 'create',
                 'update',
                 'delete',
+            ],
+            'sales' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'purchase-orders' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'delivery-orders' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'customer-returns' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'stock-opnames' => [
+                'read',
+                'create',
+                'update',
+                'delete',
+            ],
+            'product-stocks' => [
+                'read',
+            ],
+            'profit-losses' => [
+                'read',
+            ],
+            'empty-product-stocks' => [
+                'read',
+            ],
+            'backup-data' => [
+                'read',
+            ],
+            'import-data' => [
+                'read',
+                'create',
             ],
         ];
     }

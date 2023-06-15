@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="btn btn-primary" id="btn-create">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-create" disabled>Simpan</button>
                 </div>
             </form>
         </div>
@@ -192,8 +192,10 @@
             if (isEmpty)
             {
                 $('.empty-row').show();
+                $('#btn-create').attr('disabled', true);
             }else{
                 $('.empty-row').hide();
+                $('#btn-create').attr('disabled', false);
             }
         }
 
