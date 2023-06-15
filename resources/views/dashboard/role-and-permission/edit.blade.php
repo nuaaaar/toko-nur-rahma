@@ -41,20 +41,22 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                    <div class="flex flex-wrap space-x-5">
+                    <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach ($groupedPermissions as $prefix => $permissions)
-                            <div class="flex flex-col">
-                                <h5 class="font-semibold">{{ __('modules.' . $prefix) }}</h5>
-                                @foreach ($permissions as $key => $permission)
-                                    <div class="flex item-start">
-                                        <div class="flex items-center h-5">
-                                            <input type="checkbox" name="permissions[]" id="{{ $prefix . '-' . $key }}" aria-describedby="{{ $prefix . '-' . $key }}" class="custom-checkbox permission-checkbox" value="{{ $prefix . '.' . $permission }}" {{ in_array($prefix . '.' . $permission, $role->permissions->pluck('name')->toArray()) ? 'checked' : '' }}>
+                            <div class="col-span-1">
+                                <div class="flex flex-col">
+                                    <h5 class="font-semibold">{{ __('modules.' . $prefix) }}</h5>
+                                    @foreach ($permissions as $key => $permission)
+                                        <div class="flex item-start">
+                                            <div class="flex items-center h-5">
+                                                <input type="checkbox" name="permissions[]" id="{{ $prefix . '-' . $key }}" aria-describedby="{{ $prefix . '-' . $key }}" class="custom-checkbox permission-checkbox" value="{{ $prefix . '.' . $permission }}" {{ in_array($prefix . '.' . $permission, $role->permissions->pluck('name')->toArray()) ? 'checked' : '' }}>
+                                            </div>
+                                            <div class="ml-3 text-sm">
+                                                <label for="{{ $prefix . '-' . $key }}" class="text-gray-500 dark:text-gray-300">{{ __('permissions.' . $permission) }}</label>
+                                            </div>
                                         </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="{{ $prefix . '-' . $key }}" class="text-gray-500 dark:text-gray-300">{{ __('permissions.' . $permission) }}</label>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         @endforeach
                     </div>

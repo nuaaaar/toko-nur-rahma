@@ -39,7 +39,7 @@
 }
 
 .btn-text{
-    @apply px-0;
+    @apply px-0 hover:text-primary-600;
 }
 
 .btn-primary {

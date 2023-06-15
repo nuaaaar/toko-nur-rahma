@@ -55,6 +55,10 @@ class PurchaseOrderRepositoryImplement extends Eloquent implements PurchaseOrder
             if (isset($filters['date_to'])) {
                 $query->where('date', '<=', $filters['date_to']);
             }
+
+            if (isset($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
         });
 
         return $this;

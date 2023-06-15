@@ -27,32 +27,32 @@ class RoleAndPermissionController extends Controller
 
     public function index(Request $request)
     {
-        $request['orderBy'] = $request->orderBy ?? 'name'; // Atur default orderBy
-        $request['orderType'] = $request->orderType ?? 'asc'; // Atur default orderType
+        $request['orderBy'] = $request->orderBy ?? 'name';
+        $request['orderType'] = $request->orderType ?? 'asc';
 
-        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix(); // Ambil data hak akses yang sudah dikelompokkan berdasarkan prefix
-        $data['roles'] = $this->roleAndPermissionService->getRolesWithPermissions($request->orderBy, $request->orderType, $request->search, 10); // Ambil data jenis pengguna dan hak aksesnya dengan pagination 10 data per halaman
+        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix();
+        $data['roles'] = $this->roleAndPermissionService->getRolesWithPermissions($request->orderBy, $request->orderType, $request->search, 10);
 
-        return view('dashboard.role-and-permission.index', $data); // Tampilkan halaman jenis pengguna
+        return view('dashboard.role-and-permission.index', $data);
     }
 
     public function create()
     {
-        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix(); // Ambil data hak akses yang sudah dikelompokkan berdasarkan prefix
+        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix();
 
-        return view('dashboard.role-and-permission.create', $data); // Tampilkan halaman tambah jenis pengguna
+        return view('dashboard.role-and-permission.create', $data);
     }
 
     public function store(CreateRoleRequest $request)
     {
         DB::beginTransaction();
         try {
-            $role = $this->roleAndPermissionService->createRole($request); // Buat data jenis pengguna
-            $role->syncPermissions($request->permissions); // Sinkronisasi hak akses
+            $role = $this->roleAndPermissionService->createRole($request);
+            $role->syncPermissions($request->permissions);
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menambahkan data'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menambah data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -63,22 +63,22 @@ class RoleAndPermissionController extends Controller
 
     public function edit($id)
     {
-        $data['role'] = $this->roleAndPermissionService->getRoleWithPermissionsById($id); // Ambil data jenis pengguna dan hak aksesnya
-        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix(); // Ambil data hak akses yang sudah dikelompokkan berdasarkan prefix
+        $data['role'] = $this->roleAndPermissionService->getRoleWithPermissionsById($id);
+        $data['groupedPermissions'] = $this->roleAndPermissionService->getGroupedPermissionsByPrefix();
 
-        return view('dashboard.role-and-permission.edit', $data); // Tampilkan halaman edit jenis pengguna
+        return view('dashboard.role-and-permission.edit', $data);
     }
 
     public function update(UpdateRoleRequest $request, int $id)
     {
         DB::beginTransaction();
         try{
-            $role = $this->roleAndPermissionService->updateRole($request, $id); // Update data jenis pengguna
-            $role->syncPermissions($request->permissions); // Sinkronisasi hak akses
+            $role = $this->roleAndPermissionService->updateRole($request, $id);
+            $role->syncPermissions($request->permissions);
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil mengubah data'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil mengubah data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -91,11 +91,11 @@ class RoleAndPermissionController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->roleAndPermissionService->deleteRole($id); // Hapus data jenis pengguna
+            $this->roleAndPermissionService->deleteRole($id);
 
             DB::commit();
 
-            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menghapus data'); // Redirect ke halaman jenis pengguna
+            return redirect()->route('dashboard.role-and-permission.index')->with('success', 'Berhasil menghapus data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);

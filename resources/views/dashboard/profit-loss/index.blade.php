@@ -69,7 +69,7 @@
                         <tbody data-accordion="collapse">
                             @forelse ($sales as $sale)
                                 <tr>
-                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-permissions-{{ $sale->id }}" aria-controls="accordion-permissions-{{ $sale->id }}" aria-expanded="false">
+                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-sale-{{ $sale->id }}" aria-controls="accordion-sale-{{ $sale->id }}" aria-expanded="false">
                                         <div class="flex justify-between w-full">
                                             <span>{{ $sale->invoice_number }}</span>
                                             <span>
@@ -80,7 +80,7 @@
                                     <td class="whitespace-nowrap">{{ $sale->customer->name ?? '' }}</td>
                                     <td class="font-medium text-black text-right">Rp{{ number_format($sale->total, 0, ',', '.') }}</td>
                                 </tr>
-                                <tr id="accordion-permissions-{{ $sale->id }}" class="hidden">
+                                <tr id="accordion-sale-{{ $sale->id }}" class="hidden">
                                     <td>
                                         @foreach ($sale->saleItems as $saleItem)
                                             <div class="flex flex-col whitespace-nowrap">
@@ -132,7 +132,7 @@
                         <tbody data-accordion="collapse">
                             @forelse ($procurements as $procurement)
                                 <tr>
-                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-permissions-{{ $procurement->id }}" aria-controls="accordion-permissions-{{ $procurement->id }}" aria-expanded="false">
+                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-procurement-{{ $procurement->id }}" aria-controls="accordion-procurement-{{ $procurement->id }}" aria-expanded="false">
                                         <div class="flex justify-between w-full">
                                             <span>{{ $procurement->invoice_number }}</span>
                                             <span>
@@ -143,7 +143,7 @@
                                     <td class="whitespace-nowrap">{{ $procurement->supplier->name ?? '' }}</td>
                                     <td class="font-medium text-black text-right">Rp{{ number_format($procurement->total, 0, ',', '.') }}</td>
                                 </tr>
-                                <tr id="accordion-permissions-{{ $procurement->id }}" class="hidden">
+                                <tr id="accordion-procurement-{{ $procurement->id }}" class="hidden">
                                     <td>
                                         @foreach ($procurement->procurementItems as $procurementItem)
                                             <div class="flex flex-col whitespace-nowrap">
@@ -195,7 +195,7 @@
                         <tbody data-accordion="collapse">
                             @forelse ($customer_returns as $customerReturn)
                                 <tr>
-                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-permissions-{{ $customerReturn->id }}" aria-controls="accordion-permissions-{{ $customerReturn->id }}" aria-expanded="false">
+                                    <th class="cursor-pointer hover:bg-gray-100 font-medium text-gray-900 whitespace-nowrap dark:text-white"  data-accordion-target="#accordion-return-{{ $customerReturn->id }}" aria-controls="accordion-return-{{ $customerReturn->id }}" aria-expanded="false">
                                         <div class="flex justify-between w-full">
                                             <span>{{ $customerReturn->invoice_number }}</span>
                                             <span>
@@ -206,7 +206,7 @@
                                     <td class="whitespace-nowrap">{{ $customerReturn->sale->customer->name ?? '' }}</td>
                                     <td class="font-medium text-black text-right">Rp{{ number_format($customerReturn->total, 0, ',', '.') }}</td>
                                 </tr>
-                                <tr id="accordion-permissions-{{ $customerReturn->id }}" class="hidden">
+                                <tr id="accordion-return-{{ $customerReturn->id }}" class="hidden">
                                     <td>
                                         @foreach ($customerReturn->customerReturnItems as $customerReturnItem)
                                             <div class="flex flex-col whitespace-nowrap">

@@ -11,36 +11,47 @@ class US07_DeleteRoleAndPermissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_authorized_user_can_delete_role_and_permission()
+    protected $user;
+
+    protected $role;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->seed('RoleAndPermissionSeeder');
 
-        $user = User::factory()->create();
-        $user->assignRole('Pimpinan');
+        $this->role = Role::create([
+            'name' => 'Testing',
+        ]);
 
-        $role = Role::create(['name' => 'Testing Role']);
+        $this->user = User::factory()->create([
+            'email' => 'user@nurrahma.test'
+        ]);
+    }
+
+    public function test_authorized_user_can_delete_role_and_permission()
+    {
+        $this->user->assignRole('Pimpinan');
 
         $data = [
-            '_method' => 'DELETE',
             '_token' => csrf_token()
         ];
-        $response = $this->actingAs($user)->post(route('dashboard.role-and-permission.destroy', $role->id), $data);
-        $response->assertRedirectToRoute('dashboard.role-and-permission.index');
+        $this->
+            actingAs($this->user)
+            ->delete(route('dashboard.role-and-permission.destroy', $this->role->id), $data)
+            ->assertRedirectToRoute('dashboard.role-and-permission.index')
+            ->assertSessionHas('success', 'Berhasil menghapus data');
     }
 
     public function test_unauthorized_user_cannot_delete_role_and_permission()
     {
-        $this->seed('RoleAndPermissionSeeder');
-
-        $user = User::factory()->create();
-
-        $role = Role::create(['name' => 'Testing Role']);
-
+        $this->user->assignRole('Marketing');
         $data = [
-            '_method' => 'DELETE',
             '_token' => csrf_token()
         ];
-        $response = $this->actingAs($user)->post(route('dashboard.role-and-permission.destroy', $role->id), $data);
-        $response->assertStatus(403);
+        $this->actingAs($this->user)
+            ->delete(route('dashboard.role-and-permission.destroy', $this->role->id), $data)
+            ->assertStatus(403);
     }
 }

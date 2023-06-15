@@ -53,7 +53,7 @@ class ProductController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menambahkan data');
+            return redirect()->route('dashboard.product.index')->with('success', 'Berhasil menambah data');
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error($e);

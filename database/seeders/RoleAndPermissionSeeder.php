@@ -35,20 +35,64 @@ class RoleAndPermissionSeeder extends Seeder
                 'roles.read', 'roles.create', 'roles.update', 'roles.delete',
                 'users.read', 'users.create', 'users.update', 'users.delete',
                 'suppliers.read', 'suppliers.create', 'suppliers.update', 'suppliers.delete',
+                'customers.read', 'customers.create', 'customers.update', 'customers.delete',
                 'banks.read', 'banks.create', 'banks.update', 'banks.delete',
                 'products.read', 'products.create', 'products.update', 'products.delete',
                 'procurements.read', 'procurements.create', 'procurements.update', 'procurements.delete',
+                'sales.read', 'sales.create', 'sales.update', 'sales.delete',
+                'purchase-orders.read', 'purchase-orders.create', 'purchase-orders.update', 'purchase-orders.delete', 'purchase-orders.change-status',
+                'delivery-orders.read', 'delivery-orders.create', 'delivery-orders.update', 'delivery-orders.delete',
+                'customer-returns.read', 'customer-returns.create', 'customer-returns.update', 'customer-returns.delete',
+                'stock-opnames.read', 'stock-opnames.create', 'stock-opnames.update', 'stock-opnames.delete',
+                'product-stocks.read',
+                'empty-product-stocks.read',
+                'profit-losses.read',
+                'backup-data.read',
+                'import-data.read', 'import-data.create'
             ],
-            'Admin Pembukuan' => [],
-            'Marketing' => [],
-            'Kepala Gudang' => [],
-            'Admin Penjualan' => [],
-            'Akuntan' => [],
+            'Admin Pembukuan' => [
+                'suppliers.read', 'suppliers.create', 'suppliers.update', 'suppliers.delete',
+                'customers.read', 'customers.create', 'customers.update', 'customers.delete',
+                'banks.read', 'banks.create', 'banks.update', 'banks.delete',
+                'products.read', 'products.create', 'products.update', 'products.delete',
+                'procurements.read', 'procurements.create', 'procurements.update', 'procurements.delete',
+                'sales.read',
+                'purchase-orders.read', 'purchase-orders.update',
+                'delivery-orders.read', 'delivery-orders.update',
+                'customer-returns.read', 'customer-returns.create', 'customer-returns.update', 'customer-returns.delete',
+                'stock-opnames.read', 'stock-opnames.create', 'stock-opnames.update', 'stock-opnames.delete',
+                'product-stocks.read',
+                'import-data.read', 'import-data.create',
+                'backup-data.read',
+                'profit-losses.read',
+            ],
+            'Marketing' => [
+                'purchase-orders.read', 'purchase-orders.create',
+            ],
+            'Kepala Gudang' => [
+                'purchase-orders.read', 'purchase-orders.change-status',
+                'stock-opnames.read', 'stock-opnames.create',
+                'product-stocks.read',
+                'empty-product-stocks.read',
+            ],
+            'Admin Penjualan' => [
+                'purchase-orders.read', 'purchase-orders.change-status',
+                'sales.read', 'sale.create',
+                'delivery-orders.read', 'delivery-orders.create', 'delivery-orders.update',
+            ],
+            'Akuntan' => [
+                'purchase-orders.read',
+                'sales.read',
+                'profit-losses.read',
+                'backup-data.read',
+            ],
         ];
 
-        $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
-            ->map(fn ($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
-            ->toArray();
+        $insertPermissions = function ($role) use ($permissionsByRole) {
+            return collect($permissionsByRole[$role])
+                ->map(fn ($name) => DB::table('permissions')->where('name', $name)->first()->id ?? DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
+                ->toArray();
+        };
 
         $permissionIdsByRole = [
             'Pimpinan' => $insertPermissions('Pimpinan'),

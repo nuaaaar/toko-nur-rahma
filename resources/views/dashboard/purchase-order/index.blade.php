@@ -21,6 +21,7 @@
                     <div class="w-full md:w-3/4">
                         <input type="hidden" name="orderBy" id="filter-orderBy" value="{{ request()->orderBy }}">
                         <input type="hidden" name="orderType" id="filter-orderType" value="{{ request()->orderType }}">
+                        <input type="hidden" name="filters[status]" id="filter-status" value="{{ request()->filters['status'] ?? '' }}">
                         <input type="hidden" name="filters[customer_id]" id="filter-customer-id" value="{{ request()->filters['customer_id'] ?? '' }}">
                         <input type="hidden" name="filters[date_from]" id="filter-date-from" value="{{ request()->filters['date_from'] ?? '' }}">
                         <input type="hidden" name="filters[date_to]" id="filter-date-to" value="{{ request()->filters['date_to'] ?? '' }}">
@@ -53,6 +54,15 @@
                         <i class="fas fa-filter"></i>
                         <span class="ml-2"> Filter </span>
                     </h1>
+                </div>
+                <div>
+                    <label class="block mb-2">Status</label>
+                    <select class="form-control input-filter init-select2" placeholder="Pilih Status" data-filter-hidden="#filter-status" allow-clear="true">
+                        <option></option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status}}" {{ request()->filters['status'] ?? '' == $status ? 'selected' : '' }}>{{ $status }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label class="block mb-2">Customer</label>
@@ -105,28 +115,32 @@
                                 <p class="mb-0">{{ $purchaseOrder->invoice_number }}</p>
                             </div>
                             <div class="text-center flex flex-col-reverse items-center md:block md:text-right">
-                                @if ($purchaseOrder->status == 'diproses')
-                                    <button type="button" class="btn btn-sm btn-success btn-done" data-invoice-number="{{ $purchaseOrder->invoice_number }}" data-total="{{ $purchaseOrder->total }}" data-url="{{ route('dashboard.purchase-order.change-status', $purchaseOrder->id) }}">
-                                        <i class="fas fa-edit"></i>
-                                        <span> Selesaikan </span>
-                                        <div class="badge badge-primary uppercase text-sm">{{ $purchaseOrder->status }}</div>
-                                    </button>
-                                @elseif ($purchaseOrder->status == 'menunggu')
-                                    <button type="button" class="btn btn-sm btn-secondary btn-cancel" data-invoice-number="{{ $purchaseOrder->invoice_number }}" data-url="{{ route('dashboard.purchase-order.change-status', $purchaseOrder->id) }}">
-                                        <i class="fas fa-edit"></i>
-                                        <span> Batalkan </span>
-                                        <div class="badge badge-danger uppercase text-sm">{{ $purchaseOrder->status }}</div>
-                                    </button>
-                                @else
-                                    <div class="badge {{ $purchaseOrder->status == 'dibatalkan' ? 'badge-secondary' : 'badge-success' }} uppercase text-sm">{{ $purchaseOrder->status }}</div>
-                                    @if ($purchaseOrder->status == 'selesai' && $purchaseOrder->sale != null)
-                                        @can('sales.read')
-                                            <a href="{{ route('dashboard.sale.index', ['search' => $purchaseOrder->sale->invoice_number]) }}" class="block mb-0 hover:text-primary-600">{{ $purchaseOrder->sale->invoice_number }}</a>
-                                        @else
-                                            <p class="mb-0">{{ $purchaseOrder->sale->invoice_number }}</p>
-                                        @endcan
+                                @can('purchase-orders.change-status')
+                                    @if ($purchaseOrder->status == 'diproses')
+                                        <button type="button" class="btn btn-sm btn-success btn-done" data-invoice-number="{{ $purchaseOrder->invoice_number }}" data-total="{{ $purchaseOrder->total }}" data-url="{{ route('dashboard.purchase-order.change-status', $purchaseOrder->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                            <span> Selesaikan </span>
+                                            <div class="badge badge-primary uppercase text-sm">{{ $purchaseOrder->status }}</div>
+                                        </button>
+                                    @elseif ($purchaseOrder->status == 'menunggu')
+                                        <button type="button" class="btn btn-sm btn-secondary btn-cancel" data-invoice-number="{{ $purchaseOrder->invoice_number }}" data-url="{{ route('dashboard.purchase-order.change-status', $purchaseOrder->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                            <span> Batalkan </span>
+                                            <div class="badge badge-danger uppercase text-sm">{{ $purchaseOrder->status }}</div>
+                                        </button>
+                                    @else
+                                        <div class="badge {{ $purchaseOrder->status == 'dibatalkan' ? 'badge-secondary' : 'badge-success' }} uppercase text-sm">{{ $purchaseOrder->status }}</div>
+                                        @if ($purchaseOrder->status == 'selesai' && $purchaseOrder->sale != null)
+                                            @can('sales.read')
+                                                <a href="{{ route('dashboard.sale.index', ['search' => $purchaseOrder->sale->invoice_number]) }}" class="block mb-0 hover:text-primary-600">{{ $purchaseOrder->sale->invoice_number }}</a>
+                                            @else
+                                                <p class="mb-0">{{ $purchaseOrder->sale->invoice_number }}</p>
+                                            @endcan
+                                        @endif
                                     @endif
-                                @endif
+                                @else
+                                    <div class="badge {{ $purchaseOrder->status == 'menunggu' ? 'badge-danger': ($purchaseOrder->status == 'diproses' ? 'badge-primary' : ($purchaseOrder->status == 'selesai' ? 'badge-success' : 'badge-secondary')) }} uppercase text-sm">{{ $purchaseOrder->status }}</div>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -162,6 +176,10 @@
                     <div class="card-footer">
                         <div class="flex flex-col md:grid  md:grid-cols-2 md:items-center">
                             <div class="flex items-center space-x-3 justify-end md:justify-start">
+                                <a href="{{ route('dashboard.purchase-order.invoice', $purchaseOrder->id) }}" class="btn btn-text" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                    <span> Print </span>
+                                </a>
                                 @if (in_array($purchaseOrder->status, ['menunggu', 'diproses']))
                                     @can('purchase-orders.update')
                                         <a href="{{ route('dashboard.purchase-order.edit', $purchaseOrder->id) }}" class="btn btn-text">

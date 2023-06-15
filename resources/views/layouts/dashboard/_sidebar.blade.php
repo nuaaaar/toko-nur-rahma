@@ -72,9 +72,9 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('product-empty-stock.read')
+                        @can('empty-product-stocks.read')
                             <li class="submenu-item">
-                                <a href="{{ route('dashboard.product-empty-stock.index') }}">
+                                <a href="{{ route('dashboard.empty-product-stock.index') }}">
                                     <span class="menu-text">Stok Kosong</span>
                                 </a>
                             </li>
@@ -108,7 +108,7 @@
                     </ul>
                 </li>
             @endcanany
-            @canany(['product-stocks.read', 'profit-and-loss'])
+            @canany(['product-stocks.read', 'profit-losses'])
                 <li class="menu-item has-submenu">
                     <a href="javascript:;" class="toggle-submenu">
                         <div class="menu-icon">
@@ -124,7 +124,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('profit-and-loss.read')
+                        @can('profit-losses.read')
                             <li class="submenu-item">
                                 <a href="{{ route('dashboard.profit-loss.index') }}">
                                     <span class="menu-text">Laba Rugi</span>

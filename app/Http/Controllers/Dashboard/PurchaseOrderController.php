@@ -38,10 +38,10 @@ class PurchaseOrderController extends Controller
         $this->productService = $productService;
         $this->productStockService = $productStockService;
 
-        $this->middleware(['permission:purchase_orders.read'], ['only' => ['index']]);
-        $this->middleware(['permission:purchase_orders.create'], ['only' => ['create', 'store']]);
-        $this->middleware(['permission:purchase_orders.update'], ['only' => ['edit', 'update']]);
-        $this->middleware(['permission:purchase_orders.delete'], ['only' => ['destroy']]);
+        $this->middleware(['permission:purchase-orders.read'], ['only' => ['index']]);
+        $this->middleware(['permission:purchase-orders.create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:purchase-orders.update'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:purchase-orders.delete'], ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -49,6 +49,7 @@ class PurchaseOrderController extends Controller
         $request['orderBy'] = $request->orderBy ?? 'date';
         $request['orderType'] = $request->orderType ?? 'desc';
 
+        $data['statuses'] = $this->purchaseOrderService->getStatuses();
         $data['banks'] = $this->bankService->all();
         $data['customers'] = $this->customerService->getCustomers('name', 'asc', null, 0);
         $data['purchase_orders'] = $this->purchaseOrderService->getPurchaseOrders($request->orderBy, $request->orderType, $request->filters, $request->search, 10);
@@ -78,7 +79,7 @@ class PurchaseOrderController extends Controller
             $this->purchaseOrderItemService->insertPurchaseOrderItems($request->purchase_order_items, $purchaseOrder->id);
 
             DB::commit();
-            return redirect()->route('dashboard.purchase-order.index')->with('success', 'Berhasil menambahkan data');
+            return redirect()->route('dashboard.purchase-order.index')->with('success', 'Berhasil menambah data');
         }catch(\Exception $e){
             DB::rollBack();
             Log::error($e);
@@ -126,7 +127,7 @@ class PurchaseOrderController extends Controller
         try{
             $purchaseOrder = $this->purchaseOrderService->findById($id);
 
-            $this->productStockService->upsertProductStocksFromEveryProductByDate('purchase_order', null, $purchaseOrder->date, $purchaseOrder->purchase_orderItems->toArray(), null);
+            $this->productStockService->upsertProductStocksFromEveryProductByDate('purchase_order', null, $purchaseOrder->date, $purchaseOrder->purchaseOrderItems->toArray(), null);
 
             $this->purchaseOrderService->delete($id);
 

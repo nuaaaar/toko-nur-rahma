@@ -70,7 +70,7 @@ class ProcurementController extends Controller
             $this->procurementItemService->insertProcurementItems($request->procurement_items, $procurement->id);
 
             DB::commit();
-            return redirect()->route('dashboard.procurement.index')->with('success', 'Berhasil menambahkan data');
+            return redirect()->route('dashboard.procurement.index')->with('success', 'Berhasil menambah data');
         }catch(\Exception $e){
             DB::rollBack();
             Log::error($e);

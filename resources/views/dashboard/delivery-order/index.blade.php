@@ -87,24 +87,24 @@
                     </select>
                 </div>
             </div>
-            @forelse ($delivery_orders as $delivery_order)
+            @forelse ($delivery_orders as $deliveryOrder)
                 <div class="card">
                     <div class="card-header">
                         <div class="flex flex-wrap justify-center md:justify-between items-center">
                             <div class="w-full md:w-auto text-center md:text-left">
-                                <h4 class="font-bold mb-0">{{ $delivery_order->receiver_name ?? 'Data tidak tersedia' }}</h4>
-                                <p class="mb-0">{{ $delivery_order->invoice_number }}</p>
+                                <h4 class="font-bold mb-0">{{ $deliveryOrder->receiver_name ?? 'Data tidak tersedia' }}</h4>
+                                <p class="mb-0">{{ $deliveryOrder->invoice_number }}</p>
                             </div>
                             <div class="text-center flex flex-col-reverse items-center md:block md:text-right">
                                 <p class="text-sm text-gray-500">Nomor PO</p>
-                                <p class="mb-0">{{ $delivery_order->purchaseOrder->invoice_number }}</p>
+                                <p class="mb-0">{{ $deliveryOrder->purchaseOrder->invoice_number }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <table class="w-full">
                             <tbody>
-                                @foreach ($delivery_order->deliveryOrderItems as $deliveryOrderItem)
+                                @foreach ($deliveryOrder->deliveryOrderItems as $deliveryOrderItem)
                                     <tr>
                                         <td class="font-medium">{{ $deliveryOrderItem->product->name ?? 'Data tidak tersedia' }}</td>
                                         <td class="text-right">{{ number_format($deliveryOrderItem->qty, 0, ',', '.') }} {{ $deliveryOrderItem->product->unit ?? '' }}</td>
@@ -116,15 +116,19 @@
                     <div class="card-footer">
                         <div class="flex flex-col md:grid md:grid-cols-2 md:items-center">
                             <div class="flex items-center space-x-3 justify-end md:justify-start">
-                                @if(in_array($delivery_order->purchaseOrder->status ?? '', ['menunggu', 'diproses']))
+                                <a href="{{ route('dashboard.delivery-order.invoice', $deliveryOrder->id) }}" class="btn btn-text" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                    <span> Print </span>
+                                </a>
+                                @if(in_array($deliveryOrder->purchaseOrder->status ?? '', ['menunggu', 'diproses']))
                                     @can('delivery-orders.update')
-                                        <a href="{{ route('dashboard.delivery-order.edit', $delivery_order->id) }}" class="btn btn-text">
+                                        <a href="{{ route('dashboard.delivery-order.edit', $deliveryOrder->id) }}" class="btn btn-text">
                                             <i class="fas fa-pencil"></i>
                                             <span> Edit </span>
                                         </a>
                                     @endcan
                                     @can('delivery-orders.delete')
-                                        <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.delivery-order.destroy', $delivery_order->id) }}">
+                                        <button class="btn btn-text btn-delete" data-url="{{ route('dashboard.delivery-order.destroy', $deliveryOrder->id) }}">
                                             <i class="fas fa-trash"></i>
                                             <span> Hapus </span>
                                         </button>
@@ -133,7 +137,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="mb-0 text-xs">Diperbarui pada <span class="text-primary-600">{{ $delivery_order->updated_at->format('Y-m-d H:i') }}</span> oleh <span class="text-primary-600">{{ $delivery_order->user->name }}</span></p>
+                            <p class="mb-0 text-xs">Diperbarui pada <span class="text-primary-600">{{ $deliveryOrder->updated_at->format('Y-m-d H:i') }}</span> oleh <span class="text-primary-600">{{ $deliveryOrder->user->name }}</span></p>
                         </div>
                     </div>
                 </div>

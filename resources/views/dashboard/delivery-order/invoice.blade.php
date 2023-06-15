@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title> Invoice </title>
+<title>Surat Jalan</title>
 <meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
 <style type="text/css">
@@ -51,9 +51,9 @@
                     &nbsp;
                 </td>
                 <td align="right">
-                    <b>INVOICE</b>
+                    <b>SURAT JALAN</b>
                     <br>
-                    <small style="color:  rgb(234 88 12)!important;">{{ $sale->invoice_number }}</small>
+                    <small style="color:  rgb(234 88 12)!important;">{{ $delivery_order->invoice_number }}</small>
                 </td>
             </tr>
         </table>
@@ -66,14 +66,24 @@
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="10%">
-                        Penjual
+                        Pengirim
                     </td>
                     <td>
                         : <strong>CV. Nur Rahma</strong>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2" height="100%"></td>
+                <tr style="font-size: 12px;">
+                    <td width="10%" style="text-wrap:nowrap">
+                        Nomor PO
+                    </td>
+                    <td>
+                        : <strong>{{ $delivery_order->purchaseOrder->invoice_number }}</strong>
+                    </td>
+                </tr>
+                <tr style="font-size: 12px;">
+                    <td colspan="2">
+                        &nbsp;
+                    </td>
                 </tr>
             </table>
             <table>
@@ -84,39 +94,37 @@
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="30%" style="vertical-align: top;">
-                        Pembeli
+                        Penerima
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
-                    <td style="vertical-align: top;">
-                        <strong>{{ $sale->customer->name ?? '' }}</strong>
+                    <td style="vertical-align: top; text-wrap: nowrap">
+                        <strong>{{ $delivery_order->receiver_name ?? '' }}</strong>
                     </td>
                 </tr>
                 <tr style="font-size: 12px;">
-                    <td width="30%" style="vertical-align: top; text-wrap: nowrap">
-                        Tanggal Pembelian
+                    <td width="30%" style="vertical-align: top;">
+                        No. Telp Penerima
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
-                    <td style="vertical-align: top;">
-                        <strong>{{ $sale->date->isoFormat('D MMMM Y'); }}</strong>
+                    <td style="vertical-align: top; text-wrap: nowrap">
+                        <strong>{{ $delivery_order->receiver_phone_number ?? '' }}</strong>
                     </td>
                 </tr>
-                @if ($sale->purchaseOrder != null)
-                    <tr style="font-size: 12px;">
-                        <td width="30%" style="vertical-align: top; text-wrap: nowrap">
-                            Nomor PO
-                        </td>
-                        <td width="2%" style="vertical-align: top;">
-                            :
-                        </td>
-                        <td style="vertical-align: top;">
-                            <strong>{{ $sale->purchaseOrder->invoice_number }}</strong>
-                        </td>
-                    </tr>
-                @endif
+                <tr style="font-size: 12px;">
+                    <td width="30%" style="vertical-align: top;">
+                        Alamat Penerima
+                    </td>
+                    <td width="2%" style="vertical-align: top;">
+                        :
+                    </td>
+                    <td style="vertical-align: top; width: 32ch">
+                        <strong>{{ $delivery_order->receiver_address ?? '' }}</strong>
+                    </td>
+                </tr>
             </table>
         </div>
         <table width="100%" style="margin-top: 20px;">
@@ -127,60 +135,57 @@
                 <td width="50%" style="padding: 10px;">
                     <strong>INFO PRODUK</strong>
                 </td>
-                <td width="10%" align="right">
+                <td width="10%" align="center">
                     <strong>JUMLAH</strong>
                 </td>
-                <td width="20%" align="right">
-                    <strong>HARGA SATUAN</strong>
-                </td>
-                <td width="20%" align="right">
-                    <strong>TOTAL HARGA</strong>
+                <td style="text-align: center">
+                    <strong>Keterangan</strong>
                 </td>
             </tr>
             <tr>
                 <td height="1" style="border-bottom: 2px solid black;" colspan="4"></td>
             </tr>
-            @foreach ($sale->saleItems as $saleItem)
+            @foreach ($delivery_order->deliveryOrderItems as $deliveryOrderItem)
                 <tr style="font-size: 12px;">
                     <td width="50%" style="padding: 10px;">
-                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $saleItem->product->name }} / {{ $saleItem->product->unit }}</strong>
+                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $deliveryOrderItem->product->name }} / {{ $deliveryOrderItem->product->unit }}</strong>
                     </td>
-                    <td width="10%" align="right">
-                        {{ $saleItem->qty }}
+                    <td width="10%" align="center">
+                        {{ $deliveryOrderItem->qty }} {{  $deliveryOrderItem->product->unit }}
                     </td>
-                    <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price, 0, ',', '.') }}
-                    </td>
-                    <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price_total, 0, ',', '.') }}
-                    </td>
+                    <td></td>
                 </tr>
             @endforeach
             <tr>
-                <td height="1" style="border-bottom: 0.5px solid gray;" colspan="4"></td>
+                <td height="1" style="border-bottom: 0.5px solid gray;" colspan="3"></td>
             </tr>
             <tr>
-                <td height="15" colspan="4"></td>
+                <td height="20px" colspan="3"></td>
             </tr>
             <tr style="font-size: 12px;">
-                <td width="50%" height="10"></td>
-                <td width="20%" colspan="2" align="left">
-                    <strong>TOTAL HARGA ({{ $sale->saleItems->sum('qty') }} BARANG)</strong>
+                <td colspan="2" style="vertical-align: top">
+                    <small>
+                        Catatan :
+                        <ul>
+                            <li>Barang - barang tersebut, diatas telah diterima dalam keadaan baik</li>
+                            <li>Barang yang sudah diterima tidak dapat dikembalikan atau ditukar</li>
+                            <li>Tanpa Invoice Asli, Surat Jalan ini tidak berlaku untuk penagihan.</li>
+                        </ul>
+                    </small>
+                    <div style="text-align:center; display: inline-flex">
+                        <div style="padding: 5px; border: 1px solid black; ">
+                            <h4 style="margin: 0">Tanggal</h4>
+                            <h4 style="margin: 0">Jam</h4>
+                            <p style="margin: 16px 0 0 0; font-size: 12px">Diterima dengan baik</p>
+                        </div>
+                        <div style="border: 1px solid black; width: 128px"></div>
+                    </div>
                 </td>
-                <td width="20%" align="right">
-                    <strong>Rp{{ number_format($sale->total, 0, ',', '.') }}</strong>
-                </td>
-            </tr>
-            <tr>
-                <td height="10" style="border-bottom: 0.5px solid gray;" colspan="4"></td>
-            </tr>
-            <tr style="font-size: 12px;">
-                <td colspan="2"></td>
-                <td style="vertical-align: top;" colspan="2">
+                <td style="vertical-align: top;">
                     <div style="width: 60%; margin-left: auto">
                         <div style="text-align:center; display:flex; flex-direction: column; justify-content: between">
                             <div>
-                                <p style="text-align:left">Balikpapan, </p>
+                                <p style="text-align:left;">Balikpapan, </p>
                                 <p style="margin-bottom: 60px;">Hormat Kami,</p>
                             </div>
                             <div>
@@ -191,7 +196,6 @@
                 </td>
             </tr>
         </table>
-
     </div>
 </page>
 

@@ -73,7 +73,7 @@ class US01_LoginTest extends TestCase
     public function test_user_cannot_login_without_email()
     {
         $data = [
-            'email' => '',
+            'email' => null,
             'password' => 'password',
             '_token' => csrf_token()
         ];
@@ -88,7 +88,7 @@ class US01_LoginTest extends TestCase
     {
         $data = [
             'email' => $this->user->email,
-            'password' => '',
+            'password' => null,
             '_token' => csrf_token()
         ];
         $this

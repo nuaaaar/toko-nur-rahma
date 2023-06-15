@@ -98,7 +98,7 @@
                             </tr>
                             <tr id="accordion-permissions-{{ $role->id }}" class="hidden">
                                 <td colspan="5">
-                                    <div class="flex flex-wrap space-x-5">
+                                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                         @foreach ($groupedPermissions as $prefix => $permissions)
                                             <div class="flex flex-col">
                                                 <h5 class="font-semibold">{{ __('modules.' . $prefix) }}</h5>

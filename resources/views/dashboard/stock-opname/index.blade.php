@@ -43,11 +43,11 @@
                 <table class="table">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" style="width: 1%">Judul</th>
-                            <th scope="col" class="whitespace-nowrap" style="width: 1%">Tanggal SO</th>
-                            <th scope="col" class="text-right" style="width: 1%">Aktual</th>
-                            <th scope="col" class="text-right" style="width: 1%">Sistem</th>
-                            <th scope="col" class="text-right" style="width: 1%">Selisih</th>
+                            <th scope="col" style="{{ count($stock_opnames) > 0 ? 'width: 1%' : '' }}">Judul</th>
+                            <th scope="col" class="whitespace-nowrap" style="{{ count($stock_opnames) > 0 ? 'width: 1%' : '' }}">Tanggal SO</th>
+                            <th scope="col" class="text-right" style="{{ count($stock_opnames) > 0 ? 'width: 1%' : '' }}">Aktual</th>
+                            <th scope="col" class="text-right" style="{{ count($stock_opnames) > 0 ? 'width: 1%' : '' }}">Sistem</th>
+                            <th scope="col" class="text-right" style="{{ count($stock_opnames) > 0 ? 'width: 1%' : '' }}">Selisih</th>
                             <th class="text-right" scope="col"></th>
                         </tr>
                     </thead>
@@ -125,7 +125,7 @@
                             </tr>
                         @empty
                             <tr class="border-0">
-                                <td colspan="3" class="text-center">
+                                <td colspan="6" class="text-center">
                                     @include('components.empty-state.table')
                                 </td>
                             </tr>

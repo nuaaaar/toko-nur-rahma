@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title> Invoice </title>
+<title>Pengadaan Stok</title>
 <meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
 <style type="text/css">
@@ -51,9 +51,9 @@
                     &nbsp;
                 </td>
                 <td align="right">
-                    <b>INVOICE</b>
+                    <b>PENGADAAN STOK</b>
                     <br>
-                    <small style="color:  rgb(234 88 12)!important;">{{ $sale->invoice_number }}</small>
+                    <small style="color:  rgb(234 88 12)!important;">{{ $procurement->invoice_number }}</small>
                 </td>
             </tr>
         </table>
@@ -66,7 +66,7 @@
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="10%">
-                        Penjual
+                        Penerima
                     </td>
                     <td>
                         : <strong>CV. Nur Rahma</strong>
@@ -84,13 +84,13 @@
                 </tr>
                 <tr style="font-size: 12px;">
                     <td width="30%" style="vertical-align: top;">
-                        Pembeli
+                        Agen
                     </td>
                     <td width="2%" style="vertical-align: top;">
                         :
                     </td>
-                    <td style="vertical-align: top;">
-                        <strong>{{ $sale->customer->name ?? '' }}</strong>
+                    <td style="vertical-align: top; text-wrap: nowrap">
+                        <strong>{{ $procurement->supplier->name ?? '' }}</strong>
                     </td>
                 </tr>
                 <tr style="font-size: 12px;">
@@ -101,22 +101,9 @@
                         :
                     </td>
                     <td style="vertical-align: top;">
-                        <strong>{{ $sale->date->isoFormat('D MMMM Y'); }}</strong>
+                        <strong>{{ $procurement->date->isoFormat('D MMMM Y'); }}</strong>
                     </td>
                 </tr>
-                @if ($sale->purchaseOrder != null)
-                    <tr style="font-size: 12px;">
-                        <td width="30%" style="vertical-align: top; text-wrap: nowrap">
-                            Nomor PO
-                        </td>
-                        <td width="2%" style="vertical-align: top;">
-                            :
-                        </td>
-                        <td style="vertical-align: top;">
-                            <strong>{{ $sale->purchaseOrder->invoice_number }}</strong>
-                        </td>
-                    </tr>
-                @endif
             </table>
         </div>
         <table width="100%" style="margin-top: 20px;">
@@ -140,19 +127,19 @@
             <tr>
                 <td height="1" style="border-bottom: 2px solid black;" colspan="4"></td>
             </tr>
-            @foreach ($sale->saleItems as $saleItem)
+            @foreach ($procurement->procurementItems as $procurementItem)
                 <tr style="font-size: 12px;">
                     <td width="50%" style="padding: 10px;">
-                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $saleItem->product->name }} / {{ $saleItem->product->unit }}</strong>
+                        <strong style="color:  rgb(234 88 12)!important; font-size: 14px;">{{ $procurementItem->product->name }} / {{ $procurementItem->product->unit }}</strong>
                     </td>
                     <td width="10%" align="right">
-                        {{ $saleItem->qty }}
+                        {{ $procurementItem->qty }}
                     </td>
                     <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price, 0, ',', '.') }}
+                        Rp{{ number_format($procurementItem->capital_price, 0, ',', '.') }}
                     </td>
                     <td width="20%" align="right">
-                        Rp{{ number_format($saleItem->selling_price_total, 0, ',', '.') }}
+                        Rp{{ number_format($procurementItem->capital_price_total, 0, ',', '.') }}
                     </td>
                 </tr>
             @endforeach
@@ -165,10 +152,10 @@
             <tr style="font-size: 12px;">
                 <td width="50%" height="10"></td>
                 <td width="20%" colspan="2" align="left">
-                    <strong>TOTAL HARGA ({{ $sale->saleItems->sum('qty') }} BARANG)</strong>
+                    <strong>TOTAL HARGA ({{ $procurement->procurementItems->sum('qty') }} BARANG)</strong>
                 </td>
                 <td width="20%" align="right">
-                    <strong>Rp{{ number_format($sale->total, 0, ',', '.') }}</strong>
+                    Rp{{ number_format($procurement->total, 0, ',', '.') }}
                 </td>
             </tr>
             <tr>
@@ -191,7 +178,6 @@
                 </td>
             </tr>
         </table>
-
     </div>
 </page>
 
