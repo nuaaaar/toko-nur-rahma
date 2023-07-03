@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function()
             Route::get('invoice', Dashboard\SaleInvoiceController::class)->name('invoice');
         });
 
+        Route::resource('setting', Dashboard\SettingController::class)->only('index', 'update');
+
         Route::resource('stock-opname', Dashboard\StockOpnameController::class);
 
         Route::resource('supplier', Dashboard\SupplierController::class);

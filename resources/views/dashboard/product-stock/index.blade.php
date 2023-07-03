@@ -75,7 +75,7 @@
                 </div>
                 <div class="inline-flex gap-1 items-center">
                     <span class="bg-red-600 p-2"></span>
-                    <span class="text-xs">Toko Mengganti Barang Customer</span>
+                    <span class="text-xs">Ganti Barang Customer</span>
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -98,6 +98,7 @@
                             @foreach ($dates as $date)
                                 <th scope="col" class="text-center w-1/12">{{ date('m/d', strtotime($date)) }}</th>
                             @endforeach
+                            <th class="text-center" scope="col">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,6 +128,20 @@
                                         @endif
                                     </td>
                                 @endforeach
+                                <td class="font-bold text-left">
+                                    <div class="flex gap-y-0 gap-x-2 total-wrapper">
+                                        <div class="flex flex-col whitespace-nowrap">
+                                            <div class="text-secondary-600">Stok: {{ $currentDateProductStock['stock'] }}</div>
+                                            <div class="text-green-500">Pengadaan Stok: {{ collect($product->filled_product_stocks)->sum('procurement') }}</div>
+                                            <div class="text-blue-600">Retur Customer: {{ collect($product->filled_product_stocks)->sum('return') }}</div>
+                                        </div>
+                                        <div class="flex flex-col whitespace-nowrap">
+                                            <div class="text-fuchsia-500">PO Dikirim: {{ 0 - collect($product->filled_product_stocks)->sum('delivery_order') }}</div>
+                                            <div class="text-primary-500">Penjualan: {{ 0 - collect($product->filled_product_stocks)->sum('sale') }}</div>
+                                            <div class="text-red-600">Ganti Barang: {{ 0 - collect($product->filled_product_stocks)->sum('change') }}</div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

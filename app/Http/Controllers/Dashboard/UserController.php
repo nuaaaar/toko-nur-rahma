@@ -25,7 +25,8 @@ class UserController extends Controller
         $this->middleware(['permission:users.read'], ['only' => ['index']]);
         $this->middleware(['permission:users.create'], ['only' => ['create', 'store']]);
         $this->middleware(['permission:users.update'], ['only' => ['edit', 'update']]);
-        $this->middleware(['permission:users.delete'], ['only' => ['destroy']]);    }
+        $this->middleware(['permission:users.delete'], ['only' => ['destroy']]);
+    }
 
     public function index(Request $request)
     {

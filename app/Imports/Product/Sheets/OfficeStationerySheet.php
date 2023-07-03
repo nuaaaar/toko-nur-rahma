@@ -7,22 +7,20 @@ use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class OfficeStationerySheet implements ToModel, WithHeadingRow, WithChunkReading
+class OfficeStationerySheet implements ToModel, WithHeadingRow, WithChunkReading, WithUpserts
 {
     protected $category;
 
-    protected $existingProductCodes;
-
-    public function __construct(array $existingProductCodes)
+    public function __construct()
     {
-        $this->existingProductCodes = $existingProductCodes;
         $this->category = Category::where('name', 'ATK')->first();
     }
 
     public function model(array $row)
     {
-        if(in_array($row['kode_barang'], $this->existingProductCodes)){
+        if($row['kode_barang'] == null){
             return null;
         }
         return new Product([
@@ -34,6 +32,11 @@ class OfficeStationerySheet implements ToModel, WithHeadingRow, WithChunkReading
             'selling_price' => str_replace('.', '', $row['harga_jual']),
             'category_id' => $this->category->id,
         ]);
+    }
+
+    public function uniqueBy()
+    {
+        return ['product_code', 'deleted_identifier'];
     }
 
     public function chunkSize(): int
