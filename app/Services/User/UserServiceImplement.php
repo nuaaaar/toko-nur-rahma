@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use LaravelEasyRepository\Service;
@@ -105,7 +106,7 @@ class UserServiceImplement extends Service implements UserService{
         return $this->mainRepository->create($request->except('roles'));
     }
 
-    public function updateUser(UpdateUserRequest $request, int $id)
+    public function updateUser(UpdateUserRequest | UpdateProfileRequest $request, int $id)
     {
         $user = $this->mainRepository->findOrFail($id);
 

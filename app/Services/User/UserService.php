@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use Illuminate\Http\Request;
 use LaravelEasyRepository\BaseService;
@@ -27,5 +28,5 @@ interface UserService extends BaseService{
 
     public function createUser(CreateUserRequest $data);
 
-    public function updateUser(UpdateUserRequest $data, int $id);
+    public function updateUser(UpdateUserRequest | UpdateProfileRequest $data, int $id);
 }
