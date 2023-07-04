@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($sale_items as $sale_item)
+            @foreach ($sale_items as $saleItem)
                 <tr>
                     <td>{{ $saleItem->sale->invoice_number }}</td>
                     <td>{{ $saleItem->product->name }}</td>

@@ -102,17 +102,17 @@
                         </div>
                         <div class="mb-2">
                             <label class="label-block text-left">Dari Tanggal</label>
-                            <input type="date" name="date_from" class="form-control" value="{{ date('Y-m-01') }}" id="procurement-date-from" required>
+                            <input type="date" name="date_from" class="form-control" value="{{ date('Y-m-01') }}" id="product-import-date-from" required>
                         </div>
                         <div>
                             <label class="label-block text-left">Hingga Tanggal</label>
-                            <input type="date" name="date_from" class="form-control" value="{{ date('Y-m-d') }}" id="procurement-date-to" required>
+                            <input type="date" name="date_to" class="form-control" value="{{ date('Y-m-d') }}" id="product-import-date-to" required>
                         </div>
-                        <button type="submit" id="btn-submit-procurement" style="display: none;"></button>
+                        <button type="submit" id="btn-submit-product-import" style="display: none;"></button>
                     </form>
                 `, () => {
-                    $(document).find('#btn-submit-procurement').click();
-                    if ($('#procurement-date-from').val() == '' || $('#procurement-date-to').val() == '') {
+                    $(document).find('#btn-submit-product-import').click();
+                    if ($(document).find('#product-import-date-from').val() == '' || $(document).find('#product-import-date-to').val() == '') {
                         return false;
                     }
                 })

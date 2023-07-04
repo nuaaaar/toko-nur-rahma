@@ -79,6 +79,11 @@ Route::middleware('auth')->group(function()
 
         Route::resource('product', Dashboard\ProductController::class);
 
+        Route::prefix('product/{product}')->name('product.')->group(function()
+        {
+            Route::get('barcode', Dashboard\ProductBarcodeController::class)->name('barcode');
+        });
+
         Route::resource('empty-product-stock', Dashboard\EmptyProductStockController::class);
 
         Route::resource('product-import', Dashboard\ProductImportController::class)->only('index', 'store');

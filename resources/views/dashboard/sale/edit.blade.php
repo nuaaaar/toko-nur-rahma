@@ -184,16 +184,6 @@
                 }
             });
 
-            $(document).on('change', '#product_name', function()
-            {
-                let productCode = $(this).find(':selected').data('product-code');
-                if (productCode)
-                {
-                    $(this).val('').trigger('change');
-                    addProductToTable(productCode);
-                }
-            });
-
             $(document).on('click', '.btn-delete', function()
             {
                 $(this).closest('tr').remove();

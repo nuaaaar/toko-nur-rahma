@@ -62,7 +62,7 @@
                                 <select class="form-control init-select2" id="product_name" placeholder="Cari barang berdasarkan nama" allow-clear="true">
                                     <option></option>
                                     @foreach ($products as $product)
-                                        <option value="{{ $product->product_id }}" data-product-code="{{ $product->product_code }}">{{ implode(' | ', [$product->product_code, $product->barcode ?? ' - ', $product->name . ' / ' . $product->unit]) }}</option>
+                                        <option value="{{ $product->id }}" data-product-code="{{ $product->product_code }}">{{ implode(' | ', [$product->product_code, $product->barcode ?? ' - ', $product->name . ' / ' . $product->unit]) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -131,16 +131,6 @@
             $(document).on('change', '.trigger-qty-actual', function()
             {
                 recalculateActual();
-            });
-
-            $(document).on('change', '#product_name', function()
-            {
-                let productCode = $(this).find(':selected').data('product-code');
-                if (productCode)
-                {
-                    $(this).val('').trigger('change');
-                    addProductToTable(productCode);
-                }
             });
 
             $(document).on('change', '#product_name', function()
