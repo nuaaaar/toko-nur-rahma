@@ -31,7 +31,7 @@
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                         @can('delivery-orders.create')
-                            <a href="javascript:;" class="btn btn-primary" id="btn-create">
+                            <a href="javascript:;" class="btn btn-primary" id="btn-create" data-url="{{ route('dashboard.stock-opname.create') }}">
                                 <i class="fas fa-plus"></i>
                                 <span> Stock Opname </span>
                             </a>
@@ -181,21 +181,27 @@
 
             $(document).on('click', '#btn-create', function()
             {
-                showFormDialog(null, `
+                const url = $(this).data('url');
 
-                    <form action="{{ route('dashboard.delivery-order.create') }}">
+                showFormDialog(null, `
+                    <form action="${url}" id="create-form-dialog">
                         <div class="mb-5">
-                            <h5 class="text-lg text-black font-medium">Tambah Stock Opname</h5>
+                            <h5 class="text-xl text-black font-medium">Stock Opname</h5>
+                            <h5 class="text-base text-black font-medium">Pilih Periode Tanggal</h5>
+                        </div>
+                        <div class="mb-2">
+                            <label class="label-block text-left">Dari Tanggal</label>
+                            <input type="date" name="date_from" class="form-control" value="{{ date('Y-m-01') }}" id="stock-opname-date-from" required>
                         </div>
                         <div>
-                            <label class="label-block text-left">No. Invoice Purchase Order</label>
-                            <input type="text" name="invoice_number" class="form-control" placeholder="PO/2023/01/02/034567" required>
+                            <label class="label-block text-left">Hingga Tanggal</label>
+                            <input type="date" name="date_to" class="form-control" value="{{ date('Y-m-d') }}" id="stock-opname-date-to" required>
                         </div>
-                        <button type="submit" id="btn-submit-create" style="display: none;"></button>
+                        <button type="submit" id="btn-submit-stock-opname" style="display: none;"></button>
                     </form>
                 `, () => {
-                    $(document).find('#btn-submit-create').click();
-                    if ($('input[name="invoice_number"]').val() == '') {
+                    $(document).find('#btn-submit-stock-opname').click();
+                    if ($(document).find('#stock-opname-date-from').val() == '' || $(document).find('#stock-opname-date-to').val() == '') {
                         return false;
                     }
                 })

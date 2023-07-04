@@ -119,7 +119,11 @@
                     <tbody>
                         @forelse ($products as $product)
                             <tr>
-                                <td>{{ $product->product_code }}</td>
+                                <td>
+                                    <a class="text-primary-600 font-medium cursor-pointer barcode-print" href="{{ route('dashboard.product.barcode', $product->id) }}" target="_blank">
+                                        {{ $product->product_code }}
+                                    </a>
+                                </td>
                                 <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                                     {{ $product->name }}
                                 </th>
@@ -178,6 +182,7 @@
                     deleteForm.submit();
                 });
             });
+
         });
     </script>
 @endpush

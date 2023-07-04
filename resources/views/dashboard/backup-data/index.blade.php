@@ -148,13 +148,13 @@
                         </div>
                         <div>
                             <label class="label-block text-left">Hingga Tanggal</label>
-                            <input type="date" name="date_from" class="form-control" value="{{ date('Y-m-d') }}" id="procurement-date-to" required>
+                            <input type="date" name="date_to" class="form-control" value="{{ date('Y-m-d') }}" id="procurement-date-to" required>
                         </div>
                         <button type="submit" id="btn-submit-procurement" style="display: none;"></button>
                     </form>
                 `, () => {
                     $(document).find('#btn-submit-procurement').click();
-                    if ($('#procurement-date-from').val() == '' || $('#procurement-date-to').val() == '') {
+                    if ($(document).find('#procurement-date-from').val() == '' || $(document).find('#procurement-date-to').val() == '') {
                         return false;
                     }
                 })

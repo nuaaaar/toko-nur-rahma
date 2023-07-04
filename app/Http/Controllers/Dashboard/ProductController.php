@@ -25,7 +25,8 @@ class ProductController extends Controller
         $this->middleware(['permission:products.read'], ['only' => ['index']]);
         $this->middleware(['permission:products.create'], ['only' => ['create', 'store']]);
         $this->middleware(['permission:products.update'], ['only' => ['edit', 'update']]);
-        $this->middleware(['permission:products.delete'], ['only' => ['destroy']]);    }
+        $this->middleware(['permission:products.delete'], ['only' => ['destroy']]);
+    }
 
     public function index(Request $request)
     {
