@@ -127,7 +127,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $users->links() }}
+            {{ $users->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

@@ -162,7 +162,7 @@
             @empty
                 @include('components.empty-state.card')
             @endforelse
-            {{ $customer_returns->links() }}
+            {{ $customer_returns->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

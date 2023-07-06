@@ -236,7 +236,7 @@
             @empty
                 @include('components.empty-state.card')
             @endforelse
-            {{ $purchase_orders->links() }}
+            {{ $purchase_orders->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

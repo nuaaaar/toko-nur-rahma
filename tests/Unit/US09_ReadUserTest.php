@@ -23,16 +23,9 @@ class US09_ReadUserTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function test_unauthorized_user_cannot_read_user()
+    public function test_user_can_see_role_and_permission_list_as_table()
     {
-        $this->seed('RoleAndPermissionSeeder');
-
-        $user = User::factory()->create();
-
-        $this
-            ->actingAs($user)
-            ->get(route('dashboard.user.index'))
-            ->assertStatus(403);
+        $this->assertTrue(true);
     }
 
     public function test_user_can_search_user_by_name()
@@ -46,5 +39,17 @@ class US09_ReadUserTest extends TestCase
             ->actingAs($user)
             ->get(route('dashboard.user.index', ['search' => $user->name]))
             ->assertSee($user->name);
+    }
+
+    public function test_unauthorized_user_cannot_read_user()
+    {
+        $this->seed('RoleAndPermissionSeeder');
+
+        $user = User::factory()->create();
+
+        $this
+            ->actingAs($user)
+            ->get(route('dashboard.user.index'))
+            ->assertStatus(403);
     }
 }

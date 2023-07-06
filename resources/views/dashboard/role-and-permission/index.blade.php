@@ -132,7 +132,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $roles->links() }}
+            {{ $roles->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

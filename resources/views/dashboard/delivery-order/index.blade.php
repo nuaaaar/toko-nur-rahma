@@ -144,7 +144,7 @@
             @empty
                 @include('components.empty-state.card')
             @endforelse
-            {{ $delivery_orders->links() }}
+            {{ $delivery_orders->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

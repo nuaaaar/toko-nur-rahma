@@ -158,7 +158,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $products->links() }}
+            {{ $products->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

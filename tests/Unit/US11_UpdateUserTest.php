@@ -11,17 +11,17 @@ class US11_UpdateUserTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_unauthorized_user_cannot_access_edit_user_page()
-    {
-        $this->assertTrue(true);
-    }
-
     public function test_user_cannot_update_user_without_required_inputs()
     {
         $this->assertTrue(true);
     }
 
     public function test_user_cannot_update_user_with_duplicate_email()
+    {
+        $this->assertTrue(true);
+    }
+
+    public function test_unauthorized_user_cannot_access_edit_user_page()
     {
         $this->assertTrue(true);
     }

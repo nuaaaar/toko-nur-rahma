@@ -101,7 +101,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $banks->links() }}
+            {{ $banks->appends(request()->except('page'))->links() }}
         </div>
     </div>
 
