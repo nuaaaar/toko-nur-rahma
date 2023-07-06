@@ -186,7 +186,7 @@
             @empty
                 @include('components.empty-state.card')
             @endforelse
-            {{ $sales->links() }}
+            {{ $sales->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

@@ -33,15 +33,6 @@ class US04_CreateRoleAndPermissionTest extends TestCase
             ->assertViewIs('dashboard.role-and-permission.create');
     }
 
-    public function test_unauthorized_user_cannot_access_create_role_page()
-    {
-        $this->user->assignRole('Marketing');
-
-        $this->actingAs($this->user)
-            ->get('/dashboard/role-and-permission/create')
-            ->assertStatus(403);
-    }
-
     public function test_user_can_create_role_with_valid_input()
     {
         $this->user->assignRole('Pimpinan');
@@ -92,5 +83,14 @@ class US04_CreateRoleAndPermissionTest extends TestCase
             ->post('/dashboard/role-and-permission', $data)
             ->assertRedirect()
             ->assertSessionHasErrors('permissions');
+    }
+
+    public function test_unauthorized_user_cannot_access_create_role_page()
+    {
+        $this->user->assignRole('Marketing');
+
+        $this->actingAs($this->user)
+            ->get('/dashboard/role-and-permission/create')
+            ->assertStatus(403);
     }
 }

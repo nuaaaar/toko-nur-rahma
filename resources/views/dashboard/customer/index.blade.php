@@ -109,7 +109,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $customers->links() }}
+            {{ $customers->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

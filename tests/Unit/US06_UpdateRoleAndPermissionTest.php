@@ -40,32 +40,23 @@ class US06_UpdateRoleAndPermissionTest extends TestCase
             ->assertViewIs('dashboard.role-and-permission.edit');
     }
 
-    public function test_unauthorized_user_cannot_access_edit_role_page()
-    {
-        $this->user->assignRole('Marketing');
+public function test_user_can_edit_role_with_valid_input()
+{
+    $this->user->assignRole('Pimpinan');
 
-        $this->actingAs($this->user)
-            ->get('/dashboard/role-and-permission/' . $this->role->id . '/edit')
-            ->assertStatus(403);
-    }
+    $data = [
+        'name' => 'Testing',
+        'permissions' => [
+            'users.update',
+        ],
+        '_token' => csrf_token(),
+    ];
 
-    public function test_user_can_edit_role_with_valid_input()
-    {
-        $this->user->assignRole('Pimpinan');
-
-        $data = [
-            'name' => 'Testing',
-            'permissions' => [
-                'users.update',
-            ],
-            '_token' => csrf_token(),
-        ];
-
-        $this->actingAs($this->user)
-            ->put('/dashboard/role-and-permission/'. $this->role->id, $data)
-            ->assertRedirectToRoute('dashboard.role-and-permission.index')
-            ->assertSessionHas('success', 'Berhasil mengubah data');
-    }
+    $this->actingAs($this->user)
+        ->put('/dashboard/role-and-permission/'. $this->role->id, $data)
+        ->assertRedirectToRoute('dashboard.role-and-permission.index')
+        ->assertSessionHas('success', 'Berhasil mengubah data');
+}
 
     public function test_user_cannot_edit_role_without_name()
     {
@@ -80,7 +71,7 @@ class US06_UpdateRoleAndPermissionTest extends TestCase
         ];
 
         $this->actingAs($this->user)
-            ->post('/dashboard/role-and-permission', $data)
+            ->put('/dashboard/role-and-permission/'. $this->role->id, $data)
             ->assertRedirect()
             ->assertSessionHasErrors('name');
     }
@@ -96,8 +87,17 @@ class US06_UpdateRoleAndPermissionTest extends TestCase
         ];
 
         $this->actingAs($this->user)
-            ->post('/dashboard/role-and-permission', $data)
+            ->put('/dashboard/role-and-permission/'. $this->role->id, $data)
             ->assertRedirect()
             ->assertSessionHasErrors('permissions');
+    }
+
+    public function test_unauthorized_user_cannot_access_edit_role_page()
+    {
+        $this->user->assignRole('Marketing');
+
+        $this->actingAs($this->user)
+            ->get('/dashboard/role-and-permission/' . $this->role->id . '/edit')
+            ->assertStatus(403);
     }
 }

@@ -116,7 +116,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $suppliers->links() }}
+            {{ $suppliers->appends(request()->except('page'))->links() }}
         </div>
     </div>
 

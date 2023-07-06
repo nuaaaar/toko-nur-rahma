@@ -182,7 +182,7 @@
             @empty
                 @include('components.empty-state.card')
             @endforelse
-            {{ $procurements->links() }}
+            {{ $procurements->appends(request()->except('page'))->links() }}
         </div>
     </div>
 
