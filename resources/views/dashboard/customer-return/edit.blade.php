@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-span-6">
                         <label for="date" class="label-block">Tanggal Retur</label>
-                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? $customer_return->date }}" min="{{ $sale->date->format('Y-m-d') }}" required>
+                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? $customer_return->date->format('Y-m-d') }}" min="{{ $sale->date->format('Y-m-d') }}" required>
                         @error('date')
                             <span class="invalid-feedback" category="alert">
                                 <strong>{{ $message }}</strong>
