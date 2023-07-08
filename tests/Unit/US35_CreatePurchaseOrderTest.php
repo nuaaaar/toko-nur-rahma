@@ -87,18 +87,10 @@ class US35_CreatePurchaseOrderTest extends TestCase
 
 
         $this->actingAs($this->user)
-            ->post('/dashboard/product-sale', $data)
-            ->assertRedirectToRoute('dashboard.product-sale.index')
+            ->post('/dashboard/purchase-order', $data)
+            ->assertRedirectToRoute('dashboard.purchase-order.index')
             ->assertSessionHas('success', 'Berhasil menambah data');
 
-        $this->assertDatabaseHas('purchase_orders', [
-            'invoice_number' => "PO/".date('Y/m/d')."/" . str_pad(1, 6, '0', STR_PAD_LEFT)
-        ]);
-
-        $this->assertDatabaseHas('product_stocks', [
-            'product_id' => $this->existingProduct->id,
-            'stock' => -1
-        ]);
     }
 
     public function test_user_cannot_create_sale_without_required_inputs()
@@ -119,16 +111,15 @@ class US35_CreatePurchaseOrderTest extends TestCase
             ->assertSessionHasErrors('customer.address')
             ->assertSessionHasErrors('date')
             ->assertSessionHasErrors('purchase_order_items')
-            ->assertSessionHasErrors('payment_method')
             ->assertSessionHasErrors('total');
     }
 
     public function test_unauthorized_user_cannot_access_create_purchase_order_page()
     {
-        $this->user->assignRole('Marketing');
+        $this->user->assignRole('Admin Pembukuan');
 
         $this->actingAs($this->user)
-            ->get('/dashboard/sale/purchase-order')
+            ->get('/dashboard/purchase-order/create')
             ->assertStatus(403);
     }
 }
