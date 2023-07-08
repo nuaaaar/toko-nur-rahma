@@ -59,7 +59,7 @@ class US44_CreateSaleTest extends TestCase
             ->assertViewIs('dashboard.sale.create');
     }
 
-    public function test_user_can_create_product_with_valid_input()
+public function test_user_can_create_sale_with_valid_input()
     {
         $this->user->assignRole('Pimpinan');
 
@@ -101,7 +101,7 @@ class US44_CreateSaleTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_create_product_without_required_inputs()
+    public function test_user_cannot_create_sale_without_required_inputs()
     {
         $this->user->assignRole('Pimpinan');
 
@@ -123,7 +123,7 @@ class US44_CreateSaleTest extends TestCase
             ->assertSessionHasErrors('total_change');
     }
 
-    public function test_unauthorized_user_cannot_access_create_product_page()
+    public function test_unauthorized_user_cannot_access_create_sale_page()
     {
         $this->user->assignRole('Marketing');
 

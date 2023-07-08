@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class US22_ReadProductTest extends TestCase
+class US45_ReadSaleTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -40,49 +40,25 @@ class US22_ReadProductTest extends TestCase
         ]);
     }
 
-    public function test_authorized_user_can_read_product()
+    public function test_authorized_user_can_read_sale()
     {
         $this->user->assignRole('Pimpinan');
 
         $this
             ->actingAs($this->user)
-            ->get(route('dashboard.product.index'))
-            ->assertStatus(200);
+            ->get(route('dashboard.sale.index'))
+            ->assertStatus(200)
+            ->assertViewHasAll(['sales'])
+            ->assertSee('card');
     }
 
-    public function test_user_can_see_product_list_as_table()
-    {
-        $this->user->assignRole('Pimpinan');
-
-        $this
-            ->actingAs($this->user)
-            ->get(route('dashboard.product.index'))
-            ->assertSee('Kode')
-            ->assertSee('Nama Barang')
-            ->assertSee('Kategori')
-            ->assertSee('Satuan')
-            ->assertSee('Harga Modal')
-            ->assertSee('Harga Jual')
-            ->assertViewHasAll(['products']);
-    }
-
-    public function test_user_can_search_product_by_name()
-    {
-        $this->user->assignRole('Pimpinan');
-
-        $this
-            ->actingAs($this->user)
-            ->get(route('dashboard.product.index', ['search' => 'Pensil']))
-            ->assertSee('Pensil');
-    }
-
-    public function test_unauthorized_user_cannot_read_product()
+    public function test_unauthorized_user_cannot_read_sale()
     {
         $this->user->assignRole('Marketing');
 
         $this
             ->actingAs($this->user)
-            ->get(route('dashboard.product.index'))
+            ->get(route('dashboard.sale.index'))
             ->assertStatus(403);
     }
 }
