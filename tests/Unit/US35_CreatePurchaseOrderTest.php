@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class US44_CreateSaleTest extends TestCase
+class US35_CreatePurchaseOrderTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -49,14 +49,14 @@ class US44_CreateSaleTest extends TestCase
         ]);
     }
 
-    public function test_authorized_user_can_access_create_sale_page()
+    public function test_authorized_user_can_access_create_purchase_order_page()
     {
         $this->user->assignRole('Pimpinan');
 
         $this->actingAs($this->user)
-            ->get('/dashboard/sale/create')
+            ->get('/dashboard/purchase-order/create')
             ->assertStatus(200)
-            ->assertViewIs('dashboard.sale.create');
+            ->assertViewIs('dashboard.purchase-order.create');
     }
 
     public function test_user_can_create_sale_with_valid_input()
@@ -66,12 +66,14 @@ class US44_CreateSaleTest extends TestCase
         $data = [
             "_token" => csrf_token(),
             "user_id" => $this->user->id,
+            "status" => "menunggu",
             "customer" => [
                 "phone_number" => "0859106975837",
-                "name" => "Yanuar Fabien"
+                "name" => "Yanuar Fabien",
+                "address" => "Jl. Penggalang, Damai"
             ],
-            "date" => "2023-07-08",
-            "sale_items" => [
+            "date" => date('Y-m-d'),
+            "purchase_order_items" => [
                 [
                     "product_id" => $this->existingProduct->id,
                     "qty" => 1,
@@ -79,20 +81,18 @@ class US44_CreateSaleTest extends TestCase
                     "selling_price_total" => 1 * $this->existingProduct->selling_price
                 ]
             ],
-            "payment_method" => "cash",
-            "total_paid" => "400000",
-            "bank_id" => $this->bank->id,
             "total" => 1 * $this->existingProduct->selling_price,
-            "total_change" => 0
+            "total_change" => null
         ];
 
+
         $this->actingAs($this->user)
-            ->post('/dashboard/sale', $data)
-            ->assertRedirectToRoute('dashboard.sale.index')
+            ->post('/dashboard/product-sale', $data)
+            ->assertRedirectToRoute('dashboard.product-sale.index')
             ->assertSessionHas('success', 'Berhasil menambah data');
 
-        $this->assertDatabaseHas('sales', [
-            'invoice_number' => "INV/".date('Y/m/d')."/" . str_pad(1, 6, '0', STR_PAD_LEFT)
+        $this->assertDatabaseHas('purchase_orders', [
+            'invoice_number' => "PO/".date('Y/m/d')."/" . str_pad(1, 6, '0', STR_PAD_LEFT)
         ]);
 
         $this->assertDatabaseHas('product_stocks', [
@@ -108,27 +108,27 @@ class US44_CreateSaleTest extends TestCase
         $data = [
             "_token" => csrf_token(),
             "user_id" => $this->user->id,
+            "status" => "menunggu",
         ];
 
         $this->actingAs($this->user)
-            ->post('/dashboard/sale', $data)
+            ->post('/dashboard/purchase-order', $data)
             ->assertRedirect()
             ->assertSessionHasErrors('customer.name')
             ->assertSessionHasErrors('customer.phone_number')
+            ->assertSessionHasErrors('customer.address')
             ->assertSessionHasErrors('date')
-            ->assertSessionHasErrors('sale_items')
+            ->assertSessionHasErrors('purchase_order_items')
             ->assertSessionHasErrors('payment_method')
-            ->assertSessionHasErrors('total')
-            ->assertSessionHasErrors('total_paid')
-            ->assertSessionHasErrors('total_change');
+            ->assertSessionHasErrors('total');
     }
 
-    public function test_unauthorized_user_cannot_access_create_sale_page()
+    public function test_unauthorized_user_cannot_access_create_purchase_order_page()
     {
         $this->user->assignRole('Marketing');
 
         $this->actingAs($this->user)
-            ->get('/dashboard/sale/create')
+            ->get('/dashboard/sale/purchase-order')
             ->assertStatus(403);
     }
 }

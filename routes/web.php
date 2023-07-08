@@ -18,10 +18,6 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/invoice', function(){
-    return view('invoice');
-});
-
 Route::middleware('guest')->group(function()
 {
     Route::get('/', function () {

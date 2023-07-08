@@ -42,7 +42,7 @@ class US45_ReadSaleTest extends TestCase
 
     public function test_authorized_user_can_read_sale()
     {
-        $this->user->assignRole('Pimpinan');
+        $this->user->syncRoles(['Pimpinan']);
 
         $this
             ->actingAs($this->user)
@@ -54,7 +54,7 @@ class US45_ReadSaleTest extends TestCase
 
     public function test_unauthorized_user_cannot_read_sale()
     {
-        $this->user->assignRole('Marketing');
+        $this->user->syncRoles(['Marketing']);
 
         $this
             ->actingAs($this->user)

@@ -296,7 +296,7 @@
             let saleItem = saleItems.find(saleItem => saleItem.product.product_code == code || saleItem.product.barcode == code);
             let otherReturnedItems = otherCustomerReturnItems.filter(customerReturnItem => customerReturnItem.product.product_code == code || customerReturnItem.product.barcode == code);
             let totalReturnedQty = otherReturnedItems.reduce((total, customerReturnItem) => total + customerReturnItem.qty, 0);
-            let currentCustomerReturnItem = customerReturnItems.find((customerReturnItem => customerReturnItem.product.product_code == code || customerReturnItem.product.barcode == code)  && customerReturnItem.customer_return_id == customerReturnId);
+            let currentCustomerReturnItem = customerReturnItems.find(customerReturnItem => customerReturnItem.product.product_code == code || customerReturnItem.product.barcode == code  && customerReturnItem.customer_return_id == customerReturnId);
 
             let existingRow = $(`.sale-items[data-product-code="${product.product_code}"]`);
             if (existingRow.length > 0) {
@@ -348,7 +348,7 @@
         }
     </script>
 
-    @foreach ($customer_return->customerReturnItems ?? old('customer_return_items') ?? [] as $customerReturnItem)
+    @foreach (old('customer_return_items') ?? $customer_return->customerReturnItems as $customerReturnItem)
         <script>
             [oldProduct] = products.filter(product => product.id == @json($customerReturnItem['product_id']));
             addProductToTable(oldProduct.product_code);
