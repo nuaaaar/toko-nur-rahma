@@ -70,9 +70,9 @@ class SaleController extends Controller
         try{
             $customer = $this->customerService->updateOrCreateCustomer($request->customer);
 
-            $sale = $this->saleService->create(array_merge($request->except('customer', 'sale_items'), [
-                'customer_id' => $customer->id,
-            ]));
+            $request['customer_id'] = $customer->id;
+
+            $sale = $this->saleService->create($request->except('customer', 'sale_items'));
 
             $this->productStockService->upsertProductStocksFromEveryProductByDate('sale', null, $request->date, null, $request->sale_items);
 
@@ -114,9 +114,9 @@ class SaleController extends Controller
 
             $this->saleItemService->updateSaleItems($request->sale_items, $sale->id);
 
-            $this->saleService->update($id, array_merge($request->except('customer', 'sale_items'), [
-                'customer_id' => $customer->id,
-            ]));
+            $request['customer_id'] = $customer->id;
+
+            $this->saleService->update($id, $request->except('customer', 'sale_items'));
 
             DB::commit();
             return redirect()->route('dashboard.sale.index')->with('success', 'Berhasil mengubah data');

@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-span-2">
                         <label for="date" class="label-block">Tanggal</label>
-                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? $sale->date }}" required>
+                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? $sale->date->format('Y-m-d') }}" required>
                         @error('date')
                             <span class="invalid-feedback" category="alert">
                                 <strong>{{ $message }}</strong>
@@ -438,6 +438,11 @@
         <script>
             [oldProduct] = products.filter(product => product.id == @json($saleItem['product_id']));
             addProductToTable(oldProduct.product_code);
+
+            $(document).ready(function() {
+                var oldQty = @json($saleItem['qty']);
+                $(document).find('tr[data-product-code="' + oldProduct.product_code + '"]').find('input[name*="[qty]"]').val(oldQty);
+            });
         </script>
     @endforeach
 @endpush

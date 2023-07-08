@@ -112,9 +112,10 @@
                         <div class="flex flex-wrap justify-center md:justify-between items-center">
                             <div class="text-center w-full md:text-left md:w-auto">
                                 <h4 class="font-bold mb-0">{{ $purchaseOrder->customer->name ?? 'Data tidak tersedia' }}</h4>
-                                <p class="mb-0">{{ $purchaseOrder->invoice_number }}</p>
+                                <p class="font-medium mb-0">{{ $purchaseOrder->customer->phone_number ?? 'Data tidak tersedia' }}</p>
+                                <p class="font-medium mb-0">{{ $purchaseOrder->customer->address ?? 'Data tidak tersedia' }}</p>
                             </div>
-                            <div class="text-center flex flex-col-reverse items-center md:block md:text-right">
+                            <div class="text-center flex flex-col-reverse items-center md:flex-col md:items-end md:text-right">
                                 @can('purchase-orders.change-status')
                                     @if ($purchaseOrder->status == 'diproses')
                                         <button type="button" class="btn btn-sm btn-success btn-done" data-invoice-number="{{ $purchaseOrder->invoice_number }}" data-total="{{ $purchaseOrder->total }}" data-url="{{ route('dashboard.purchase-order.change-status', $purchaseOrder->id) }}">
@@ -132,15 +133,16 @@
                                         <div class="badge {{ $purchaseOrder->status == 'dibatalkan' ? 'badge-secondary' : 'badge-success' }} uppercase text-sm">{{ $purchaseOrder->status }}</div>
                                         @if ($purchaseOrder->status == 'selesai' && $purchaseOrder->sale != null)
                                             @can('sales.read')
-                                                <a href="{{ route('dashboard.sale.index', ['search' => $purchaseOrder->sale->invoice_number]) }}" class="block mb-0 hover:text-primary-600">{{ $purchaseOrder->sale->invoice_number }}</a>
+                                                <a href="{{ route('dashboard.sale.index', ['search' => $purchaseOrder->sale->invoice_number]) }}" class="block mb-0 hover:text-primary-600 md:order-last">{{ $purchaseOrder->sale->invoice_number }}</a>
                                             @else
-                                                <p class="mb-0">{{ $purchaseOrder->sale->invoice_number }}</p>
+                                                <p class="md:order-last mb-0">{{ $purchaseOrder->sale->invoice_number }}</p>
                                             @endcan
                                         @endif
                                     @endif
                                 @else
                                     <div class="badge {{ $purchaseOrder->status == 'menunggu' ? 'badge-danger': ($purchaseOrder->status == 'diproses' ? 'badge-primary' : ($purchaseOrder->status == 'selesai' ? 'badge-success' : 'badge-secondary')) }} uppercase text-sm">{{ $purchaseOrder->status }}</div>
                                 @endcan
+                                <p class="mb-0 md:order-0">{{ $purchaseOrder->invoice_number }}</p>
                             </div>
                         </div>
                     </div>
