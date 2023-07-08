@@ -91,6 +91,9 @@ class SaleController extends Controller
     public function edit($id)
     {
         $data['sale'] = $this->saleService->findById($id);
+
+        if(!$data['sale']) return abort(404);
+
         $data['banks'] = $this->bankService->all();
         $data['customers'] = $this->customerService->all();
         $data['products'] = $this->productService->getAllProductsWithLatestStock('product_code', 'asc', null, null, 0);
@@ -103,6 +106,8 @@ class SaleController extends Controller
         DB::beginTransaction();
         try{
             $sale = $this->saleService->findById($id);
+
+            if(!$sale) return abort(404);
 
             $oldSaleDate = $sale->date;
 
