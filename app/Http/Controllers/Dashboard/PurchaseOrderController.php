@@ -71,10 +71,10 @@ class PurchaseOrderController extends Controller
         try{
             $customer = $this->customerService->updateOrCreateCustomer($request->customer);
 
-            $purchaseOrder = $this->purchaseOrderService->create(array_merge($request->except('customer', 'purchase_order_items'), [
-                'status' => 'menunggu',
-                'customer_id' => $customer->id,
-            ]));
+            $request['status'] = 'menunggu';
+            $request['customer_id'] = $customer->id;
+
+            $purchaseOrder = $this->purchaseOrderService->create($request->except('customer', 'purchase_order_items'));
 
             $this->purchaseOrderItemService->insertPurchaseOrderItems($request->purchase_order_items, $purchaseOrder->id);
 
@@ -107,9 +107,9 @@ class PurchaseOrderController extends Controller
 
             $this->purchaseOrderItemService->updatePurchaseOrderItems($request->purchase_order_items, $purchaseOrder->id);
 
-            $this->purchaseOrderService->update($id, array_merge($request->except('customer', 'purchase_order_items'), [
-                'customer_id' => $customer->id,
-            ]));
+            $request['customer_id'] = $customer->id;
+
+            $this->purchaseOrderService->update($id, $request->except('customer', 'purchase_order_items'));
 
             DB::commit();
             return redirect()->route('dashboard.purchase-order.index')->with('success', 'Berhasil mengubah data');

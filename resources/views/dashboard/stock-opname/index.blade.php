@@ -65,7 +65,7 @@
                                         </span>
                                     </div>
                                 </th>
-                                <td>{{ $stockOpname->date }}</td>
+                                <td class="whitespace-nowrap">{{ $stockOpname->date }}</td>
                                 <td class="text-right">{{ number_format($totalActual, 0, ',', '.') }}</td>
                                 <td class="text-right">{{ number_format($stockOpname->stockOpnameItems->sum('system'), 0, ',', '.') }}</td>
                                 <td class="text-right">{{ number_format($stockOpname->stockOpnameItems->sum('difference'), 0, ',', '.') }}</td>
@@ -111,7 +111,7 @@
                                 <td class="text-right">
                                     <div class="flex flex-col gap-3">
                                         @foreach ($stockOpname->stockOpnameItems as $stockOpnameItem)
-                                            <span class="block whitespace-nowrap">{{ number_format($stockOpnameItem->difference, 0, ',', '.') }}</span>
+                                            <span class="block whitespace-nowrap {{ $stockOpnameItem->difference > 0 ? 'font-medium text-red-600' : '' }}">{{ number_format($stockOpnameItem->difference, 0, ',', '.') }}</span>
                                         @endforeach
                                     </div>
                                 </td>

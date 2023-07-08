@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-span-6">
                         <label for="date" class="label-block">Tanggal Pengiriman</label>
-                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? date('Y-m-d') }}" min="{{ $purchase_order->date }}" required>
+                        <input type="date" name="date" id="date" class="@error('date') is-invalid @enderror form-control" placeholder="" value="{{ old('date') ?? date('Y-m-d') }}" min="{{ $purchase_order->date->format('Y-m-d') }}" required>
                         @error('date')
                             <span class="invalid-feedback" category="alert">
                                 <strong>{{ $message }}</strong>

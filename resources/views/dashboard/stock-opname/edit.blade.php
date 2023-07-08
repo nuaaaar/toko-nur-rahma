@@ -270,6 +270,11 @@
         <script>
             [oldProduct] = products.filter(product => product.id == @json($stockOpnameItem['product_id']));
             addProductToTable(oldProduct.product_code);
+
+            $(document).ready(function() {
+                var oldQty = @json($stockOpnameItem['qty']);
+                $(document).find('tr[data-product-code="' + oldProduct.product_code + '"]').find('input[name*="[qty]"]').val(oldQty);
+            });
         </script>
     @endforeach
 @endpush
