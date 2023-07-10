@@ -25,6 +25,11 @@ class StockOpnameController extends Controller
         $this->productStockService = $productStockService;
         $this->stockOpnameService = $stockOpnameService;
         $this->stockOpnameItemService = $stockOpnameItemService;
+
+        $this->middleware(['permission:stock-opnames.read'], ['only' => ['index']]);
+        $this->middleware(['permission:stock-opnames.create'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:stock-opnames.update'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:stock-opnames.delete'], ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -51,7 +56,7 @@ class StockOpnameController extends Controller
     {
         DB::beginTransaction();
         try{
-            $stockOpname = $this->stockOpnameService->create($request->all());
+            $stockOpname = $this->stockOpnameService->create($request->except('stock_opname_items'));
 
             $this->stockOpnameItemService->insertStockOpnameItems($request->stock_opname_items, $stockOpname->id);
 
@@ -82,7 +87,7 @@ class StockOpnameController extends Controller
         try{
             $stockOpname = $this->stockOpnameService->findById($id);
 
-            $this->stockOpnameService->update($stockOpname->id, $request->all());
+            $this->stockOpnameService->update($stockOpname->id, $request->except('stock_opname_items'));
 
             $this->stockOpnameItemService->updateStockOpnameItems($request->stock_opname_items, $stockOpname->id);
 

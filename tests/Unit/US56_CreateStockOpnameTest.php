@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class US35_CreatePurchaseOrderTest extends TestCase
+class US56_CreateStockOpnameTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -49,77 +49,69 @@ class US35_CreatePurchaseOrderTest extends TestCase
         ]);
     }
 
-    public function test_authorized_user_can_access_create_purchase_order_page()
+    public function test_authorized_user_can_access_create_stock_opname_page()
     {
         $this->user->assignRole('Pimpinan');
 
         $this->actingAs($this->user)
-            ->get('/dashboard/purchase-order/create')
+            ->get('/dashboard/stock-opname/create')
             ->assertStatus(200)
-            ->assertViewIs('dashboard.purchase-order.create');
+            ->assertViewIs('dashboard.stock-opname.create');
     }
 
-    public function test_user_can_create_purchase_order_with_valid_input()
+    public function test_user_can_create_stock_opname_with_valid_input()
     {
         $this->user->assignRole('Pimpinan');
 
         $data = [
             "_token" => csrf_token(),
             "user_id" => $this->user->id,
-            "status" => "menunggu",
-            "customer" => [
-                "phone_number" => "0859106975837",
-                "name" => "Yanuar Fabien",
-                "address" => "Jl. Penggalang, Damai"
-            ],
+            "date_from" => date('Y-m-d', strtotime('-7 days')),
+            "date_to" => date('Y-m-d'),
+            "title" => "SO Pensil",
             "date" => date('Y-m-d'),
-            "purchase_order_items" => [
+            "stock_opname_items" => [
                 [
                     "product_id" => $this->existingProduct->id,
-                    "qty" => 1,
-                    "selling_price" => $this->existingProduct->selling_price,
-                    "selling_price_total" => 1 * $this->existingProduct->selling_price
+                    "physical" => "9",
+                    "returned_to_supplier" => "0",
+                    "system" => "9",
+                    "description" => null
                 ]
-            ],
-            "total" => 1 * $this->existingProduct->selling_price,
-            "total_change" => null
+            ]
         ];
 
-
         $this->actingAs($this->user)
-            ->post('/dashboard/purchase-order', $data)
-            ->assertRedirectToRoute('dashboard.purchase-order.index')
+            ->post('/dashboard/stock-opname', $data)
+            ->assertRedirectToRoute('dashboard.stock-opname.index')
             ->assertSessionHas('success', 'Berhasil menambah data');
-
     }
 
-    public function test_user_cannot_create_purchase_order_without_required_inputs()
+    public function test_user_cannot_create_stock_opname_without_required_inputs()
     {
         $this->user->assignRole('Pimpinan');
 
         $data = [
             "_token" => csrf_token(),
             "user_id" => $this->user->id,
-            "status" => "menunggu",
         ];
 
         $this->actingAs($this->user)
-            ->post('/dashboard/purchase-order', $data)
+            ->post('/dashboard/stock-opname', $data)
             ->assertRedirect()
-            ->assertSessionHasErrors('customer.name')
-            ->assertSessionHasErrors('customer.phone_number')
-            ->assertSessionHasErrors('customer.address')
+            ->assertSessionHasErrors('title')
             ->assertSessionHasErrors('date')
-            ->assertSessionHasErrors('purchase_order_items')
-            ->assertSessionHasErrors('total');
+            ->assertSessionHasErrors('date_from')
+            ->assertSessionHasErrors('date_to')
+            ->assertSessionHasErrors('stock_opname_items');
     }
 
-    public function test_unauthorized_user_cannot_access_create_purchase_order_page()
+    public function test_unauthorized_user_cannot_access_create_stock_opname_page()
     {
-        $this->user->assignRole('Admin Pembukuan');
+        $this->user->assignRole('Marketing');
 
         $this->actingAs($this->user)
-            ->get('/dashboard/purchase-order/create')
+            ->get('/dashboard/stock-opname/create')
             ->assertStatus(403);
     }
 }

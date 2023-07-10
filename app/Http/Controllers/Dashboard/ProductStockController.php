@@ -21,6 +21,8 @@ class ProductStockController extends Controller
         $this->categoryService = $categoryService;
 
         $this->productStockService = $productStockService;
+
+        $this->middleware(['permission:product-stocks.read'], ['only' => ['index']]);
     }
 
     public function index(Request $request)

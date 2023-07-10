@@ -27,28 +27,28 @@
         <div class="profit-loss-cards-wrapper">
             <div class="card">
                 <div class="card-body p-6">
-                    <h3 class="text-xl font-semibold mb-4">Penjualan</h3>
+                    <h3 class="text-xl font-semibold mb-4">Total Penjualan</h3>
                     <p class="text-2xl font-bold text-green-500">Rp{{ number_format($sales->sum('total'), 0, ',', '.') }}</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body p-6">
-                    <h3 class="text-xl font-semibold mb-4">Pengadaan Stok</h3>
+                    <h3 class="text-xl font-semibold mb-4">Total Pengadaan Stok</h3>
                     <p class="text-2xl font-bold {{ $procurements->sum('total') > 0 ? 'text-red-600' : '' }}">Rp{{ number_format($procurements->sum('total'), 0, ',', '.') }}</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body p-6">
-                    <h3 class="text-xl font-semibold mb-4">Retur Customer</h3>
+                    <h3 class="text-xl font-semibold mb-4">Total Retur Customer</h3>
                     <p class="text-2xl font-bold {{ $customer_returns->sum('total') > 0 ? 'text-red-600' : '' }}">Rp{{ number_format($customer_returns->sum('total'), 0, ',', '.') }}</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body p-6">
-                    <h3 class="text-xl font-semibold mb-4">Laba-Rugi</h3>
+                    <h3 class="text-xl font-semibold mb-4">Total Laba-Rugi</h3>
                     <p class="text-2xl font-bold {{ $total_profit_loss > 0 ? 'text-green-500' : ($total_profit_loss < 0 ? 'text-red-600' : '')  }}">Rp{{ number_format($total_profit_loss, 0, ',', '.') }}</p>
                 </div>
             </div>

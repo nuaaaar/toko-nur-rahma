@@ -70,7 +70,7 @@ class US44_CreateSaleTest extends TestCase
                 "phone_number" => "0859106975837",
                 "name" => "Yanuar Fabien"
             ],
-            "date" => "2023-07-08",
+            "date" => date('Y-m-d'),
             "sale_items" => [
                 [
                     "product_id" => $this->existingProduct->id,

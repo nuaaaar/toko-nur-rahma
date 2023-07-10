@@ -8,15 +8,12 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\Customer\CustomerService;
-use App\Services\ProductStock\ProductStockService;
-use App\Services\Sale\SaleService;
-use App\Services\SaleItem\SaleItemService;
+use App\Services\PurchaseOrder\PurchaseOrderService;
+use App\Services\PurchaseOrderItem\PurchaseOrderItemService;
 use Illuminate\Database\Seeder;
 
-class SaleSeeder extends Seeder
+class PurchaseOrderSeeder extends Seeder
 {
-    protected $category;
-
     protected $user;
 
     protected $bank;
@@ -26,18 +23,13 @@ class SaleSeeder extends Seeder
     protected $customer;
 
     public function __construct(
-        private CustomerService $customerService,
-        private SaleService $saleService,
-        private ProductStockService $productStockService,
-        private SaleItemService $saleItemService,
-    ){
-        $this->category = Category::create(['name' => 'ATK']);
-
+        protected PurchaseOrderService $purchaseOrderService,
+        protected PurchaseOrderItemService $purchaseOrderItemService,
+        protected CustomerService $customerService
+    ) {
         $this->user = User::factory()->create([
             'email' => 'user@nurrahma.test'
         ]);
-
-        $this->user->assignRole('Pimpinan');
 
         $this->bank = Bank::create([
             'name' => 'BNI',
@@ -47,24 +39,31 @@ class SaleSeeder extends Seeder
 
         $this->existingProduct = Product::first();
 
+        $this->user->assignRole('Pimpinan');
+
         $this->customer = Customer::create([
             'name' => 'Yanuar Fabien',
             'phone_number' => '081234567890',
             'address' => 'Jl. Raya No. 1'
         ]);
     }
-
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         $request = new \Illuminate\Http\Request();
+
         $request->replace([
             "user_id" => $this->user->id,
-            "customer" => $this->customer->only(['name', 'phone_number']),
+            "status" => "menunggu",
+            "customer" => [
+                "phone_number" => "0859106975837",
+                "name" => "Yanuar Fabien",
+                "address" => "Jl. Penggalang, Damai"
+            ],
             "date" => date('Y-m-d'),
-            "sale_items" => [
+            "purchase_order_items" => [
                 [
                     "product_id" => $this->existingProduct->id,
                     "qty" => 1,
@@ -72,21 +71,16 @@ class SaleSeeder extends Seeder
                     "selling_price_total" => 1 * $this->existingProduct->selling_price
                 ]
             ],
-            "payment_method" => "cash",
-            "total_paid" => "400000",
-            "bank_id" => $this->bank->id,
             "total" => 1 * $this->existingProduct->selling_price,
-            "total_change" => 0
         ]);
 
         $customer = $this->customerService->updateOrCreateCustomer($request->customer);
 
+        $request['status'] = 'menunggu';
         $request['customer_id'] = $customer->id;
 
-        $sale = $this->saleService->create($request->except('customer', 'sale_items'));
+        $purchaseOrder = $this->purchaseOrderService->create($request->except('customer', 'purchase_order_items'));
 
-        $this->productStockService->upsertProductStocksFromEveryProductByDate('sale', null, $request->date, null, $request->sale_items);
-
-        $this->saleItemService->insertSaleItems($request->sale_items, $sale->id);
+        $this->purchaseOrderItemService->insertPurchaseOrderItems($request->purchase_order_items, $purchaseOrder->id);
     }
 }
