@@ -58,6 +58,9 @@ class CustomerReturnRepositoryImplement extends Eloquent implements CustomerRetu
                     ->orWhereHas('customer', function ($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
                     })
+                    ->orWhereHas('sale', function ($query) use ($search) {
+                        $query->where('invoice_number', 'like', "%{$search}%");
+                    })
                     ->orWhereHas('customerReturnItems.product', function ($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
                     });

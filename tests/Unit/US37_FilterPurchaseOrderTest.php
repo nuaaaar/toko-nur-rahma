@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Models\Bank;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class US35_CreatePurchaseOrderTest extends TestCase
+class US37_FilterPurchaseOrderTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,7 +17,7 @@ class US35_CreatePurchaseOrderTest extends TestCase
 
     protected $category;
 
-    protected $bank;
+    protected $customer;
 
     protected $existingProduct;
 
@@ -32,12 +32,6 @@ class US35_CreatePurchaseOrderTest extends TestCase
             'email' => 'user@nurrahma.test'
         ]);
 
-        $this->bank = Bank::create([
-            'name' => 'BNI',
-            'account' => '1234567890',
-            'account_name' => 'CV. Nur Rahma'
-        ]);
-
         $this->existingProduct = Product::create([
             'name' => 'Pensil',
             'category_id' => $this->category->id,
@@ -47,20 +41,15 @@ class US35_CreatePurchaseOrderTest extends TestCase
             'capital_price' => '70000',
             'selling_price' => '150000',
         ]);
-    }
 
-    public function test_authorized_user_can_access_create_purchase_order_page()
-    {
         $this->user->assignRole('Pimpinan');
 
-        $this->actingAs($this->user)
-            ->get('/dashboard/purchase-order/create')
-            ->assertStatus(200)
-            ->assertViewIs('dashboard.purchase-order.create');
-    }
+        $this->customer = Customer::create([
+            'name' => 'Yanuar Fabien',
+            'phone_number' => '081234567890',
+            'address' => 'Jl. Raya No. 1'
+        ]);
 
-    public function test_user_can_create_purchase_order_with_valid_input()
-    {
         $this->user->assignRole('Pimpinan');
 
         $data = [
@@ -87,39 +76,36 @@ class US35_CreatePurchaseOrderTest extends TestCase
 
 
         $this->actingAs($this->user)
-            ->post('/dashboard/purchase-order', $data)
-            ->assertRedirectToRoute('dashboard.purchase-order.index')
-            ->assertSessionHas('success', 'Berhasil menambah data');
-
+            ->post('/dashboard/purchase-order', $data);
     }
 
-    public function test_user_cannot_create_purchase_order_without_required_inputs()
+    public function test_user_can_filter_purchase_order_by_date()
     {
-        $this->user->assignRole('Pimpinan');
+        $this->user->syncRoles(['Pimpinan']);
 
-        $data = [
-            "_token" => csrf_token(),
-            "user_id" => $this->user->id,
-            "status" => "menunggu",
-        ];
-
-        $this->actingAs($this->user)
-            ->post('/dashboard/purchase-order', $data)
-            ->assertRedirect()
-            ->assertSessionHasErrors('customer.name')
-            ->assertSessionHasErrors('customer.phone_number')
-            ->assertSessionHasErrors('customer.address')
-            ->assertSessionHasErrors('date')
-            ->assertSessionHasErrors('purchase_order_items')
-            ->assertSessionHasErrors('total');
+        $this
+            ->actingAs($this->user)
+            ->get(route('dashboard.purchase-order.index', ['filters' => ['date_from' => date('Y-m-d'), 'date_to' => date('Y-m-d')]]))
+            ->assertSee('PO/' . date('Y/m/d') . '/000001');
     }
 
-    public function test_unauthorized_user_cannot_access_create_purchase_order_page()
+    public function test_user_can_filter_purchase_order_by_customer_name()
     {
-        $this->user->assignRole('Admin Pembukuan');
+        $this->user->syncRoles(['Pimpinan']);
 
-        $this->actingAs($this->user)
-            ->get('/dashboard/purchase-order/create')
-            ->assertStatus(403);
+        $this
+            ->actingAs($this->user)
+            ->get(route('dashboard.purchase-order.index', ['filters' => ['customer_id' => $this->customer->id]]))
+            ->assertSee($this->customer->name);
+    }
+
+    public function test_user_can_filter_purchase_order_by_status()
+    {
+        $this->user->syncRoles(['Pimpinan']);
+
+        $this
+            ->actingAs($this->user)
+            ->get(route('dashboard.purchase-order.index', ['filters' => ['status' => 'menunggu']]))
+            ->assertSee('menunggu');
     }
 }

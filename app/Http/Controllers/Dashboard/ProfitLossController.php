@@ -27,10 +27,10 @@ class ProfitLossController extends Controller
 
     public function index(Request $request)
     {
-        $request['filters']  = [
-            'date_from' => $request->filters['date_from'] ?? date('Y-m-01'),
-            'date_to' => $request->filters['date_to'] ?? date('Y-m-d'),
-        ];
+        $dateFilters['date_from'] = $request->filters['date_from'] ?? date('Y-m-01');
+        $dateFilters['date_to'] = $request->filters['date_to'] ?? date('Y-m-d');
+
+        $request['filters'] = $dateFilters;
 
         $data['customer_returns'] = $this->customerReturnService->getCustomerReturns('date', 'desc', $request->filters, null, 0);
         $data['procurements'] = $this->procurementService->getProcurementsWithSupplierAndItems('date', 'desc', $request->filters, null, 0);

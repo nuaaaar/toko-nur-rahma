@@ -24,7 +24,7 @@ class PurchaseOrderChangeStatusController extends Controller
         $this->saleService = $saleService;
         $this->saleItemService = $saleItemService;
 
-        $this->middleware('permission:purchase-orders.change-status')->only('update');
+        $this->middleware('permission:purchase-orders.change-status');
 
     }
 
@@ -53,7 +53,7 @@ class PurchaseOrderChangeStatusController extends Controller
 
             DB::commit();
 
-            return redirect()->route('dashboard.purchase-order.index')->with('success', 'Status pemesanan berhasil diubah.');
+            return redirect()->route('dashboard.purchase-order.index')->with('success', 'Status pemesanan berhasil diubah');
         }catch (\Exception $e) {
             DB::rollback();
             Log::error($e);
