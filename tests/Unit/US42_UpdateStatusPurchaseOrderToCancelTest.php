@@ -83,7 +83,7 @@ class US42_UpdateStatusPurchaseOrderToCancelTest extends TestCase
             ->assertSessionHas('success', 'Status pemesanan berhasil diubah');
     }
 
-    public function test_unauthorized_user_can_cancel_purchase_order()
+    public function test_unauthorized_user_cannot_cancel_purchase_order()
     {
         $this->user->syncRoles(['Marketing']);
 
