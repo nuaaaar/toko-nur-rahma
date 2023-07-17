@@ -63,7 +63,7 @@ class US46_FilterSaleTest extends TestCase
             "_token" => csrf_token(),
             "user_id" => $this->user->id,
             "customer" => $this->customer->only(['name', 'phone_number']),
-            "date" => "2023-07-08",
+            "date" => date('Y-m-d'),
             "sale_items" => [
                 [
                     "product_id" => $this->existingProduct->id,
